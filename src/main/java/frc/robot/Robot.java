@@ -5,12 +5,17 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import frc.robot.util.*;
+import frc.robot.subsystems.*;
+
 
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  public static IO io = new IO();
 
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
