@@ -1,14 +1,15 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ShootSystem extends SubsystemBase{
+public class ShootSystem extends Subsystem{
 
   public ShootSystem() {
 
   }
-  
-  public void periodic() {
-    
+
+  public void initDefaultCommand() {
+
   }
+
 }

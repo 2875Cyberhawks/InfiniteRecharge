@@ -3,9 +3,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class DriveSystem extends SubsystemBase {
+public class DriveSystem extends Subsystem {
 
   public static final int[][] D_PORTS = {{0, 1},
                                          {2, 3},
@@ -23,7 +23,7 @@ public class DriveSystem extends SubsystemBase {
 
   }
 
-  public void periodic() {
+  public void initDefaultCommand() {
     
   }
 }

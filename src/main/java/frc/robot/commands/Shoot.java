@@ -2,9 +2,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class Shoot extends CommandBase {
+public class Shoot extends Command {
   
   public Shoot() {
     // Use addRequirements() here to declare subsystem dependencies.
