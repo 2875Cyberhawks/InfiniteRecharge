@@ -14,24 +14,22 @@ public class NickSystem extends PIDSubsystem {
 
   private static final double D = 0;
 
-  private static final double T = 0;
+  private static final double T = .5;
 
   public SimpleMotorFeedforward f = new SimpleMotorFeedforward(0, 0);
 
-  private static final int [] E_PORTS = {0, 1};
+  private static final int [] E_PORTS = {1, 2};
 
-  private static final int M_PORT = 2;
+  private static final int M_PORT = 8;
 
   public static Encoder enc = new Encoder(E_PORTS[0], E_PORTS[1]);
 
   public static Spark nick = new Spark(M_PORT);
-
-  public final double MAX_SPD = 10000 / 60;
   
   public NickSystem() {
     super(new PIDController(P, I, D));
     getController().setTolerance(0, T);
-    enc.setDistancePerPulse(1);
+    enc.setDistancePerPulse(0.00048828125); // 1 /2048
     setSetpoint(0);
   }
 

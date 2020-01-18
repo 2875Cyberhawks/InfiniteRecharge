@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Nick extends CommandBase {
 
-  private double speed = Robot.ns.MAX_SPD / 2;
+  //private double speed = Robot.ns.MAX_SPD / 2;
+  private static final double SPEED = 45;
   
   public Nick() {
     addRequirements(Robot.ns);
@@ -19,16 +20,18 @@ public class Nick extends CommandBase {
 
   public void execute() {
 
-    speed  += IO.getY() && speed < Robot.ns.MAX_SPD ? Robot.ns.MAX_SPD * .05 : (IO.getA() && speed > Robot.ns.MAX_SPD ? -Robot.ns.MAX_SPD * .05 : 0);
+    //speed  += IO.getY() && speed < Robot.ns.MAX_SPD ? Robot.ns.MAX_SPD * .05 : (IO.getA() && speed > Robot.ns.MAX_SPD ? -Robot.ns.MAX_SPD * .05 : 0);
 
     if(IO.getShoot()){
-      Robot.ns.setSetpoint(speed);
+      Robot.ns.setSetpoint(SPEED);
     }
     else{
       Robot.ns.setSetpoint(0);
     }
 
     SmartDashboard.putNumber("nick error", Robot.ns.getController().getVelocityError());
+    SmartDashboard.putNumber("nick speed", Robot.ns.getMeasurement());
+    SmartDashboard.putBoolean("nick in tolerance", Robot.ns.getController().atSetpoint());
   }
 
   public void end(boolean interrupted) {
