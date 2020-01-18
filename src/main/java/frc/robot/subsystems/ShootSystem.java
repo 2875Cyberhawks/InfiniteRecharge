@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+/*package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -42,7 +42,7 @@ public class ShootSystem extends SubsystemBase{
   public PIDController pidNick = new PIDController(P, I, D, F, encNick, nick);
 
   public ShootSystem() {
-    /*sal.configFactoryDefault();
+    sal.configFactoryDefault();
     nick.configFactoryDefault();
 
     sal.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
@@ -82,7 +82,7 @@ public class ShootSystem extends SubsystemBase{
     setpointN = 0;
 
     sal.setSelectedSensorPosition(0);
-    nick.setSelectedSensorPosition(0);*/
+    nick.setSelectedSensorPosition(0);
 
   }
 
@@ -101,4 +101,4 @@ public class ShootSystem extends SubsystemBase{
     setpointN = n;
   }
 
-}
+}*/

@@ -14,14 +14,16 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  public static ShootSystem ss;
+  public static SalSystem ss;
+  public static NickSystem ns;
 
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    ss = new ShootSystem();
+    ss = new SalSystem();
+    ns = new NickSystem();
   }
 
   public void robotPeriodic() {
