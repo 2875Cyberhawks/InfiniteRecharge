@@ -26,13 +26,12 @@ public class SalSystem extends PIDSubsystem {
 
   public static Spark sal = new Spark(M_PORT);
 
-  public double setpoint = 0;
-
-  public final double MAX_SPD = 18730 * 4;//inaccurate; change
+  public final double MAX_SPD = 10000 / 60;
   
   public SalSystem() {
     super(new PIDController(P, I, D));
     getController().setTolerance(0, T);
+    enc.setDistancePerPulse(1);
     setSetpoint(0);
   }
 
