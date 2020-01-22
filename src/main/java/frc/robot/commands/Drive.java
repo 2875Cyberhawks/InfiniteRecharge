@@ -1,9 +1,9 @@
 
 /*package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Drive extends Command {
+public class Drive extends CommandBase {
   
   public Drive() {
     // Use addRequirements() here to declare subsystem dependencies.

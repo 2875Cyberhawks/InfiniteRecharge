@@ -3,9 +3,9 @@
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DriveSystem extends Subsystem {
+public class DriveSystem extends SubsystemBase {
 
   public static final int[][] D_PORTS = {{0, 1},
                                          {2, 3},
@@ -23,7 +23,8 @@ public class DriveSystem extends Subsystem {
 
   }
 
-  public void initDefaultCommand() {
-    
+  public void periodic() {
+
   }
+  
 }*/
