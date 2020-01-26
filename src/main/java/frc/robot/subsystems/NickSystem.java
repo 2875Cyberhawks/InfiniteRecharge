@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+/* package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
@@ -12,7 +12,7 @@ public class NickSystem extends PIDSubsystem {
 
   private static final double I = 0;
 
-  private static final double D = 0;
+ private static final double D = 0;
 
   private static final double T = .5;
 
@@ -42,4 +42,4 @@ public class NickSystem extends PIDSubsystem {
   public double getMeasurement() {
     return enc.getRate();
   }
-}
+}*/

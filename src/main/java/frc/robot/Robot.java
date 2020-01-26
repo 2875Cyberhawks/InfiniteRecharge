@@ -4,8 +4,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 
 public class Robot extends TimedRobot {
@@ -14,19 +15,20 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  public static SalSystem ss;
-  public static NickSystem ns;
+  public static ShootSystem ss;
+  public static Shoot shoot;
 
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    ss = new SalSystem();
-    ns = new NickSystem();
+    ss = new ShootSystem();
+    shoot = new Shoot();
   }
 
   public void robotPeriodic() {
+
   }
 
   
@@ -50,8 +52,12 @@ public class Robot extends TimedRobot {
     }
   }
 
+  public void teleopInit() {
+    ss.setDefaultCommand(shoot);
+  }
 
   public void teleopPeriodic() {
+    CommandScheduler.getInstance().run();
   }
 
 
