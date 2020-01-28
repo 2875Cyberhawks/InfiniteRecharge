@@ -30,4 +30,8 @@ public class IO {
         return xbox.getBButtonPressed();
     }
 
+    public static double getForward() {
+        return Math.abs(joy.getY()) > .03 ? -joy.getY() : 0;
+    }
+
 }

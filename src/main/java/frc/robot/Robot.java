@@ -16,7 +16,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   public static ShootSystem ss;
-  public static Shoot shoot;
+  public static DriveSystem ds;
 
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
 
     ss = new ShootSystem();
-    shoot = new Shoot();
+    ds = new DriveSystem();
   }
 
   public void robotPeriodic() {
@@ -53,7 +53,8 @@ public class Robot extends TimedRobot {
   }
 
   public void teleopInit() {
-    ss.setDefaultCommand(shoot);
+    ss.setDefaultCommand(new Shoot());
+    ds.setDefaultCommand(new Drive());
   }
 
   public void teleopPeriodic() {
