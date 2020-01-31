@@ -34,4 +34,8 @@ public class IO {
         return Math.abs(joy.getY()) > .03 ? -joy.getY() : 0;
     }
 
+    public static double getTurn() {
+        return Math.abs(joy.getZ()) > .03 ? joy.getZ() : 0;
+    }
+
 }

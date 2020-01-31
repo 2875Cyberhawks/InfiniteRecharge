@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 
 
 public class Robot extends TimedRobot {
@@ -18,13 +20,17 @@ public class Robot extends TimedRobot {
   public static ShootSystem ss;
   public static DriveSystem ds;
 
+  public static AHRS gyro;
+
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
     ss = new ShootSystem();
-    ds = new DriveSystem();
+    //ds = new DriveSystem();
+    gyro = new AHRS(SPI.Port.kMXP);  
+    gyro.reset();
   }
 
   public void robotPeriodic() {
@@ -37,6 +43,8 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+
+    gyro.reset();
   }
 
   
@@ -53,8 +61,9 @@ public class Robot extends TimedRobot {
   }
 
   public void teleopInit() {
+    gyro.reset();//if robot is facing forwards at end of auto
     ss.setDefaultCommand(new Shoot());
-    ds.setDefaultCommand(new Drive());
+    //ds.setDefaultCommand(new Drive());
   }
 
   public void teleopPeriodic() {
@@ -64,4 +73,20 @@ public class Robot extends TimedRobot {
 
   public void testPeriodic() {
   }
+
+  public static double getAngle()
+    {
+        double gyAng = gyro.getAngle();
+
+        while (gyAng < -180)
+        {
+            gyAng += 360;
+        }
+        while (gyAng > 180)
+        {
+            gyAng -= 360;
+        }
+
+        return gyAng;
+    }
 }

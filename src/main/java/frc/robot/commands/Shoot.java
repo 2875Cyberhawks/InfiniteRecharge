@@ -9,7 +9,7 @@ import frc.robot.util.IO;
 public class Shoot extends CommandBase {
 
   public static final double SAL_SPD = 25;
-  public static final double NICK_SPD = 42;
+  public static final double NICK_SPD = 44;
   
   public Shoot() {
     addRequirements(Robot.ss);
@@ -23,11 +23,6 @@ public class Shoot extends CommandBase {
 
 
   public void execute() {
-    //double sInc = IO.getY() ? Robot.ss.MAX_SPD * .05 : (IO.getA() ? -Robot.ss.MAX_SPD * .05 : 0);
-    //double nInc = IO.getB() ? Robot.ss.MAX_SPD * .05 : (IO.getX() ? -Robot.ss.MAX_SPD * .05 : 0);
-
-    //Robot.ss.setSetpoint(Robot.ss.setpointS + sInc, Robot.ss.setpointN + nInc);
-    
     if(IO.getShoot()){
       Robot.ss.setSetpoint(SAL_SPD, NICK_SPD);
     }

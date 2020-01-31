@@ -40,7 +40,7 @@ public class ShootSystem extends SubsystemBase{
 
   public double dPP = 1.0 / 2048.0;
 
-  public PIDController pidSal = new PIDController(P, I, D);
+  public PIDController pidSal = new PIDController(.23, I, .008);
 
   public PIDController pidNick = new PIDController(-P, -I, -D);
 
