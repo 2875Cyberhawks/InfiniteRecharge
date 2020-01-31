@@ -12,6 +12,7 @@ public class Drive extends CommandBase {
   public double gyAng = 0;
   public static final double P = 0;
   public static final double D = 0;
+  public static final double MAX_CORR = .5;
 
   public Drive() {
     addRequirements(Robot.ds);
@@ -44,14 +45,16 @@ public class Drive extends CommandBase {
 
   public double notPaulDrive() {
     double error = gyAng - lastAng;
-    
+
     if (error < -180)
       error += 360;
     else if (error > 180)
       error -= 360;
     error /= 180;
 
-    return (P * error) - (D * Robot.gyro.getRate());
+    double corr = (P * error) - (D * Robot.gyro.getRate());
+
+    return Math.abs(corr) > MAX_CORR ? Math.abs(corr) / corr : corr;
   }
 
   public void end(boolean interrupted) {
