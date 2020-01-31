@@ -54,7 +54,7 @@ public class Drive extends CommandBase {
 
     double corr = (P * error) - (D * Robot.gyro.getRate());
 
-    return Math.abs(corr) > MAX_CORR ? Math.abs(corr) / corr : corr;
+    return Math.abs(corr) > MAX_CORR ? Math.abs(corr) / corr  * MAX_CORR : corr;
   }
 
   public void end(boolean interrupted) {
