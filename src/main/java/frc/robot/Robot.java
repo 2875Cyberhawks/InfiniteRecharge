@@ -21,7 +21,10 @@ public class Robot extends TimedRobot {
   public static ShootSystem ss;
   public static DriveSystem ds;
 
-  public static PixyCam pixy;
+  public static PixyCam ballPixy;
+  public static PixyCam goalPixy;
+
+  public static boolean inAuto = false;
 
 
   public static AHRS gyro;
@@ -34,7 +37,8 @@ public class Robot extends TimedRobot {
     //ss = new ShootSystem();
     ds = new DriveSystem();
     gyro = new AHRS(SPI.Port.kMXP); 
-    pixy = new PixyCam();
+    ballPixy = new PixyCam();
+    goalPixy = new PixyCam();
     gyro.reset();
   }
 
@@ -48,7 +52,7 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-
+    inAuto = true;
     gyro.reset();
   }
 
@@ -66,6 +70,7 @@ public class Robot extends TimedRobot {
   }
 
   public void teleopInit() {
+    inAuto = false;
     gyro.reset();//if robot is facing forwards at end of auto
    // ss.setDefaultCommand(new Shoot());
     ds.setDefaultCommand(new Drive());

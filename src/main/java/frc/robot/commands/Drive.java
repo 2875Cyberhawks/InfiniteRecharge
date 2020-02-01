@@ -3,17 +3,16 @@ package frc.robot.commands;
 import frc.robot.Robot;
 import frc.robot.util.IO;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpiutil.math.MathUtil;
-import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
+import frc.robot.subsystems.DriveSystem;
+import frc.robot.commands.Align;
 
 public class Drive extends CommandBase {
 
   public static final double T_MULT = .5;
   public double lastAng = 0; 
   public double gyAng = 0;
-  public static final double P = 0;
-  public static final double D = 0;
-  public static final double MAX_CORR = .5;
 
   public Drive() {
     addRequirements(Robot.ds);
@@ -31,10 +30,10 @@ public class Drive extends CommandBase {
 
     double turn = IO.getTurn();
     double notPaul = IO.getForward();
-    if(IO.getA()){
-      align();
-      return;
-    }
+    if(IO.getA())
+      CommandScheduler.getInstance().schedule(new Align('a'));
+    else if(IO.getB())
+      CommandScheduler.getInstance().schedule(new Align('b'));
     else if(turn == 0 && notPaul != 0)
       turn = notPaulDrive();
     else
@@ -56,20 +55,9 @@ public class Drive extends CommandBase {
       error -= 360;
     error /= 180;
 
-    double corr = (P * error) - (D * Robot.gyro.getRate());
+    double corr = (DriveSystem.P * error) - (DriveSystem.D * Robot.gyro.getRate());
 
-    return Math.abs(corr) > MAX_CORR ? Math.abs(corr) / corr  * MAX_CORR : corr;
-  }
-
-  public void align(){//different P and D vals?
-    Block target = Robot.pixy.getBlock();
-    double error = target.getX() - 160;
-    while(Math.abs(error) > 5 && !IO.getA()){
-      double turn = (P * error) - (D * Robot.gyro.getRate());
-      double left = MathUtil.clamp(turn, -1, 1);//T_MULT ? 
-      double right = MathUtil.clamp(-turn, -1, 1);
-      Robot.ds.setSpeed(left, right);
-    }
+    return Math.abs(corr) > DriveSystem.MAX_CORR ? Math.abs(corr) / corr  * DriveSystem.MAX_CORR : corr;
   }
 
   public void end(boolean interrupted) {

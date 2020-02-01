@@ -14,6 +14,10 @@ public class DriveSystem extends SubsystemBase {
 
   public static final int[][] E_PORTS = {{6, 7},
                                          {8, 9}};
+
+  public static final double P = 0;
+  public static final double D = 0;
+  public static final double MAX_CORR = .5;
   
   private TalonSRX right = new TalonSRX(D_PORTS[0][1]);
   private VictorSPX rf1 = new VictorSPX(D_PORTS[1][1]);
@@ -96,6 +100,11 @@ public class DriveSystem extends SubsystemBase {
   public void setSpeed(double l, double r){
     lSpeed = l;
     rSpeed = r;
+  }
+
+  public double[] getPositions() {
+    double[] d = {leftEnc.getDistance(), rightEnc.getDistance()};
+    return d;
   }
   
 }
