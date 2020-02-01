@@ -27,8 +27,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    ss = new ShootSystem();
-    //ds = new DriveSystem();
+    //ss = new ShootSystem();
+    ds = new DriveSystem();
     gyro = new AHRS(SPI.Port.kMXP);  
     gyro.reset();
   }
@@ -62,8 +62,8 @@ public class Robot extends TimedRobot {
 
   public void teleopInit() {
     gyro.reset();//if robot is facing forwards at end of auto
-    ss.setDefaultCommand(new Shoot());
-    //ds.setDefaultCommand(new Drive());
+   // ss.setDefaultCommand(new Shoot());
+    ds.setDefaultCommand(new Drive());
   }
 
   public void teleopPeriodic() {
