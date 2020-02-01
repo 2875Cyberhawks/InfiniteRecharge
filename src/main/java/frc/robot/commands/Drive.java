@@ -63,7 +63,7 @@ public class Drive extends CommandBase {
 
   public void align(){//different P and D vals?
     Block target = Robot.pixy.getBlock();
-    double error = 160 - target.getX();
+    double error = target.getX() - 160;
     while(Math.abs(error) > 5 && !IO.getA()){
       double turn = (P * error) - (D * Robot.gyro.getRate());
       double left = MathUtil.clamp(turn, -1, 1);//T_MULT ? 
