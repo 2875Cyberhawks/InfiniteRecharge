@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
+import frc.robot.util.PixyCam;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
@@ -20,6 +21,9 @@ public class Robot extends TimedRobot {
   public static ShootSystem ss;
   public static DriveSystem ds;
 
+  public static PixyCam pixy;
+
+
   public static AHRS gyro;
 
   public void robotInit() {
@@ -29,7 +33,8 @@ public class Robot extends TimedRobot {
 
     //ss = new ShootSystem();
     ds = new DriveSystem();
-    gyro = new AHRS(SPI.Port.kMXP);  
+    gyro = new AHRS(SPI.Port.kMXP); 
+    pixy = new PixyCam();
     gyro.reset();
   }
 

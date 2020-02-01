@@ -4,6 +4,7 @@ import frc.robot.Robot;
 import frc.robot.util.IO;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
+import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 public class Drive extends CommandBase {
 
@@ -30,8 +31,11 @@ public class Drive extends CommandBase {
 
     double turn = IO.getTurn();
     double notPaul = IO.getForward();
-
-    if(turn == 0 && notPaul != 0)
+    if(IO.getA()){
+      align();
+      return;
+    }
+    else if(turn == 0 && notPaul != 0)
       turn = notPaulDrive();
     else
       lastAng = gyAng;
@@ -55,6 +59,17 @@ public class Drive extends CommandBase {
     double corr = (P * error) - (D * Robot.gyro.getRate());
 
     return Math.abs(corr) > MAX_CORR ? Math.abs(corr) / corr  * MAX_CORR : corr;
+  }
+
+  public void align(){//different P and D vals?
+    Block target = Robot.pixy.getBlock();
+    double error = 160 - target.getX();
+    while(Math.abs(error) > 5 && !IO.getA()){
+      double turn = (P * error) - (D * Robot.gyro.getRate());
+      double left = MathUtil.clamp(turn, -1, 1);//T_MULT ? 
+      double right = MathUtil.clamp(-turn, -1, 1);
+      Robot.ds.setSpeed(left, right);
+    }
   }
 
   public void end(boolean interrupted) {
