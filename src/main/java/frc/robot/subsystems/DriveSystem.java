@@ -5,12 +5,13 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.InvertType;
 
 public class DriveSystem extends SubsystemBase {
 
-  public static final int[][] D_PORTS = {{0, 1},
-                                         {2, 3},
-                                         {4, 5}};
+  public static final int[][] D_PORTS = {{2, 1},
+                                         {0, 3},
+                                         {8, 6}};
 
   public static final int[][] E_PORTS = {{6, 7},
                                          {8, 9}};
@@ -44,6 +45,10 @@ public class DriveSystem extends SubsystemBase {
 
     lf1.follow(left);
     lf2.follow(left);
+
+    right.setInverted(true);
+    rf1.setInverted(InvertType.FollowMaster);
+    rf2.setInverted(InvertType.FollowMaster);
 
     right.configFactoryDefault();
     rf1.configFactoryDefault();

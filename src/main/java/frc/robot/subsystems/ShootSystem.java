@@ -15,7 +15,7 @@ public class ShootSystem extends SubsystemBase{
   private static final int [][] E_PORTS = {{4, 5},
                                           {6, 7}};
 
-  private static final int [] M_PORTS = {1, 2};
+  private static final int [] M_PORTS = {2, 3};
 
   private static final double P = .4;// 2:1 -> N: {.4, 0, .013, -.13}, S: {.27, 0, .014, .11}
 
@@ -33,6 +33,9 @@ public class ShootSystem extends SubsystemBase{
   public static TalonSRX sal = new TalonSRX(M_PORTS[0]);
 
   public static TalonSRX nick = new TalonSRX(M_PORTS[1]);
+
+  public static final double SAL_SPD = 20.25;//25;
+  public static final double NICK_SPD = 44;//44;
 
   public double setpointS = 0;
 
@@ -108,6 +111,10 @@ public class ShootSystem extends SubsystemBase{
   public void setSetpoint(double s, double n){
     setpointS = s;
     setpointN = n;
+  }
+
+  public boolean atSetpoint(){
+    return pidSal.atSetpoint() && pidNick.atSetpoint();
   }
 
 }

@@ -8,7 +8,7 @@ public class MoveDist extends CommandBase {
 
   private double goal;
   private double[] init;
-  private double speed = .5;
+  public static final double F = .5;
   private double ang;
 
   public static final double TOL = .1;
@@ -16,12 +16,6 @@ public class MoveDist extends CommandBase {
   public MoveDist(double d) {
     addRequirements(Robot.ds);
     goal = d;
-  }
-
-  public MoveDist(double d, double s){
-    addRequirements(Robot.ds);
-    goal = d;
-    speed = s;
   }
 
   public void initialize() {
@@ -44,6 +38,9 @@ public class MoveDist extends CommandBase {
   }
 
   public void end(boolean interrupted) {
+    double[] pos = Robot.ds.getPositions();
+    double dist = ((pos[0] - init[0]) + (pos[1] - init[1])) / 2;
+    System.out.println("moved: " + dist + "\nGoal: " + goal);
   }
 
   public boolean isFinished() {

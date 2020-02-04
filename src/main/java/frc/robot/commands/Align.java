@@ -32,6 +32,7 @@ public class Align extends CommandBase {
   public void end(boolean interrupted) {
     if(!Robot.inAuto)
       CommandScheduler.getInstance().schedule(new Drive());
+    System.out.println("aligned");
   }
 
   public boolean isFinished() {

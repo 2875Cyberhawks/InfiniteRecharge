@@ -30,11 +30,11 @@ public class Drive extends CommandBase {
 
     double turn = IO.getTurn();
     double notPaul = IO.getForward();
-    if(IO.getA())
+    /*if(IO.getA())
       CommandScheduler.getInstance().schedule(new Align('a'));
     else if(IO.getB())
       CommandScheduler.getInstance().schedule(new Align('b'));
-    else if(turn == 0 && notPaul != 0)
+    else*/ if(turn == 0 && notPaul != 0)
       turn = notPaulDrive();
     else
       lastAng = gyAng;
@@ -47,7 +47,8 @@ public class Drive extends CommandBase {
   }
 
   public double notPaulDrive() {
-    double error = gyAng - lastAng;
+    return 0;
+    /*double error = gyAng - lastAng;
 
     if (error < -180)
       error += 360;
@@ -57,7 +58,7 @@ public class Drive extends CommandBase {
 
     double corr = (DriveSystem.P * error) - (DriveSystem.D * Robot.gyro.getRate());
 
-    return Math.abs(corr) > DriveSystem.MAX_CORR ? Math.abs(corr) / corr  * DriveSystem.MAX_CORR : corr;
+    return Math.abs(corr) > DriveSystem.MAX_CORR ? Math.abs(corr) / corr  * DriveSystem.MAX_CORR : corr;*/
   }
 
   public void end(boolean interrupted) {

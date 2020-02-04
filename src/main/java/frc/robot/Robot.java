@@ -37,8 +37,8 @@ public class Robot extends TimedRobot {
     //ss = new ShootSystem();
     ds = new DriveSystem();
     gyro = new AHRS(SPI.Port.kMXP); 
-    ballPixy = new PixyCam();
-    goalPixy = new PixyCam();
+    //ballPixy = new PixyCam();
+    //goalPixy = new PixyCam();
     gyro.reset();
   }
 
@@ -72,7 +72,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     inAuto = false;
     gyro.reset();//if robot is facing forwards at end of auto
-   // ss.setDefaultCommand(new Shoot());
+    //ss.setDefaultCommand(new Shoot());
     ds.setDefaultCommand(new Drive());
   }
 
