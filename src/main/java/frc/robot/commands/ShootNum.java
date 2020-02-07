@@ -21,17 +21,21 @@ public class ShootNum extends CommandBase {
 
   public void execute() {
     Robot.ss.setSetpoint(ShootSystem.SAL_SPD, ShootSystem.NICK_SPD);
-    if(Robot.ss.atSetpoint()){
+    if(Robot.ss.atSetpoint() && (numBalls == 0 || time.get() > .25)){
       //feed
       shot++;
+      time.stop();
+      time.reset();
+      time.start();
     }
   }
 
   public void end(boolean interrupted) {
+    time.stop();
     Robot.ss.setSetpoint(0, 0);
   }
 
   public boolean isFinished() {
-    return false;
+    return shot >= numBalls && time.get() >= .25;
   }
 }

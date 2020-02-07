@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveSystem;
 
-public class TurnTo extends CommandBase {
+public class TurnTo extends CommandBase { //shooting angle approx 169.8725527885 from middle of far trench run (380.52 in)
 
   double goal;
   public static final double MULT = 1;
