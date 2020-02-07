@@ -30,6 +30,7 @@ public class Align extends CommandBase {
   
 
   public void end(boolean interrupted) {
+    Robot.ds.setSpeed(0, 0);
     if(!Robot.inAuto)
       CommandScheduler.getInstance().schedule(new Drive());
     System.out.println("aligned");

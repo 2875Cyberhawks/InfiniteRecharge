@@ -31,6 +31,7 @@ public class TurnTo extends CommandBase { //shooting angle approx 169.8725527885
   }
 
   public void end(boolean interrupted) {
+    Robot.ds.setSpeed(0, 0);
     System.out.println("Turned to: " + Robot.getAngle() + "\nGoal: " + goal);
   }
 

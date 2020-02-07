@@ -111,5 +111,9 @@ public class DriveSystem extends SubsystemBase {
     double[] d = {leftEnc.getDistance(), rightEnc.getDistance()};
     return d;
   }
+
+  public double avgSpeed() {
+    return (leftEnc.getRate() + rightEnc.getRate()) / 2;
+  }
   
 }
