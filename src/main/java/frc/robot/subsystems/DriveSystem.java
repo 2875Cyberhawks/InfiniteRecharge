@@ -4,8 +4,15 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
+
 import com.ctre.phoenix.motorcontrol.InvertType;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 public class DriveSystem extends SubsystemBase {
 
@@ -36,9 +43,19 @@ public class DriveSystem extends SubsystemBase {
 
   private double rSpeed = 0;
 
+  public static final double WHEEL_BASE_M = .66675; //26.25 in?
+
+  private DifferentialDriveKinematics kine = new DifferentialDriveKinematics(WHEEL_BASE_M);
+
+  private double[] AUTO_POS = {0, 0}; //start position in meters
+
+  private DifferentialDriveOdometry odo = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(Robot.getAngle())), new Pose2d(AUTO_POS[0], AUTO_POS[1], new Rotation2d()));
+
+
+
   public DriveSystem() {
     leftEnc.setDistancePerPulse(1.0/2048.0);
-    rightEnc.setDistancePerPulse(1.0/2048.0);
+    rightEnc.setDistancePerPulse(1.0/2048.0); // * diameter in meters
 
     rf1.follow(right);
     rf2.follow(right);
@@ -100,6 +117,7 @@ public class DriveSystem extends SubsystemBase {
   public void periodic() {
     left.set(ControlMode.PercentOutput, lSpeed);
     right.set(ControlMode.PercentOutput, rSpeed);
+    odo.update(new Rotation2d(Math.toRadians(Robot.getAngle())), rightEnc.getDistance(), leftEnc.getDistance());
   }
 
   public void setSpeed(double l, double r){

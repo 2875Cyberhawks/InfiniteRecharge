@@ -3,17 +3,41 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import java.nio.file.Path;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+
 
 public class MovePath extends CommandBase {
 
-  public MovePath() {
+  boolean failed = false;
+  private RamseteController ram;
+  private Trajectory traj;
+
+  public MovePath(String path) {
     addRequirements(Robot.ds);
+    try{
+      Path p = Filesystem.getDeployDirectory().toPath().resolve(path);
+      traj = TrajectoryUtil.fromPathweaverJson(p);
+    }
+    catch(Exception e){
+      System.out.println("path file failed");
+      failed = true;
+    }
   }
 
   public void initialize() {
+    if(!failed){
+      
+    }
   }
 
   public void execute() {
+    if(!failed){
+
+    }
   }
 
   public void end(boolean interrupted) {
@@ -21,6 +45,6 @@ public class MovePath extends CommandBase {
   }
 
   public boolean isFinished() {
-    return false;
+    return failed;
   }
 }
