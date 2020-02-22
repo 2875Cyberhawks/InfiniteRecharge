@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 public class MovePath extends CommandBase {
 
   boolean failed = false;
-  private RamseteController ram;
+  private RamseteCommand ramCom;
   private Trajectory traj;
+  public static final double B = 0;
+  public static final double ZETA = 0;
 
   public MovePath(String path) {
     addRequirements(Robot.ds);
@@ -30,13 +32,16 @@ public class MovePath extends CommandBase {
 
   public void initialize() {
     if(!failed){
-      
+      ramCom = new RamseteCommand(traj, Robot.ds::getPose, new RamseteController(B, ZETA), 
+        new SimpleMotorFeedForward(DriveSystem.V, DriveSystem.VSpM, DriveSystem.VS2pM), Robot.ds::getKine, 
+        Robot.ds::getSpeeds, new PIDController(DriveSystem.P, 0, 0), new PIDController(DriveSystem.P, 0, 0), 
+        Robot.ds::setVolts, Robot.ds);
     }
   }
 
   public void execute() {
     if(!failed){
-
+      ramCom.execute();
     }
   }
 
@@ -45,7 +50,7 @@ public class MovePath extends CommandBase {
   }
 
   public boolean isFinished() {
-    return failed;
+    return failed || ramCom.isFinished;
   }
 }
 */

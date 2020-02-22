@@ -27,7 +27,10 @@ public class DriveSystem extends SubsystemBase {
   public static final double P = 0;
   public static final double D = 0;
   public static final double MAX_CORR = .5;
-  
+  public static final double V = 0; //kVolts
+  public static final double VSpM = 0; //kVoltSecondsPerMeter
+  public static final double VS2pM = 0; //kVoltSeconds^2PerMeter
+
   /*private TalonSRX right = new TalonSRX(D_PORTS[0][1]);
   private VictorSPX rf1 = new VictorSPX(D_PORTS[1][1]);
   private VictorSPX rf2 = new VictorSPX(D_PORTS[2][1]);
@@ -142,5 +145,22 @@ public class DriveSystem extends SubsystemBase {
   public double avgSpeed() {
     return (leftEnc.getRate() + rightEnc.getRate()) / 2;
   }
+
+  public void setVolts(double l, double r){
+    left.setVoltage(l);
+    right.setVoltage(r);
+  }
   
+  /*public Pose2d getPose() {
+    return odo.getPoseMeters();
+  }
+  
+  public DifferentialDriveKinematics getKine(){
+    return kine;
+  }
+  
+  public DifferentialDriveWheelSpeeds getSpeeds() {
+    return new DifferentialDriveWheelSpeeds(leftEnc.getRate(), rightEnc.getRate());
+  }*/
+
 }
