@@ -3,10 +3,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
@@ -16,9 +17,9 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 public class DriveSystem extends SubsystemBase {
 
-  public static final int[][] D_PORTS = {{2, 1},
-                                         {0, 3},
-                                         {8, 6}};
+  public static final int[][] D_PORTS = {{1, 4},
+                                         {2, 5},
+                                         {3, 6}};
 
   public static final int[][] E_PORTS = {{6, 7},
                                          {8, 9}};
@@ -27,13 +28,21 @@ public class DriveSystem extends SubsystemBase {
   public static final double D = 0;
   public static final double MAX_CORR = .5;
   
-  private TalonSRX right = new TalonSRX(D_PORTS[0][1]);
+  /*private TalonSRX right = new TalonSRX(D_PORTS[0][1]);
   private VictorSPX rf1 = new VictorSPX(D_PORTS[1][1]);
   private VictorSPX rf2 = new VictorSPX(D_PORTS[2][1]);
   
   private TalonSRX left = new TalonSRX(D_PORTS[0][0]);
   private VictorSPX lf1 = new VictorSPX(D_PORTS[1][0]);
-  private VictorSPX lf2 = new VictorSPX(D_PORTS[2][0]);
+  private VictorSPX lf2 = new VictorSPX(D_PORTS[2][0]);*/
+
+  private CANSparkMax right = new CANSparkMax(D_PORTS[0][1], MotorType.kBrushless);
+  private CANSparkMax rf1 = new CANSparkMax(D_PORTS[1][1], MotorType.kBrushless);
+  private CANSparkMax rf2 = new CANSparkMax(D_PORTS[2][1], MotorType.kBrushless);
+  
+  private CANSparkMax left = new CANSparkMax(D_PORTS[0][0], MotorType.kBrushless);
+  private CANSparkMax lf1 = new CANSparkMax(D_PORTS[1][0], MotorType.kBrushless);
+  private CANSparkMax lf2 = new CANSparkMax(D_PORTS[2][0], MotorType.kBrushless);
 
   private Encoder leftEnc = new Encoder(E_PORTS[0][0], E_PORTS[0][1]);
 
@@ -45,11 +54,11 @@ public class DriveSystem extends SubsystemBase {
 
   public static final double WHEEL_BASE_M = .66675; //26.25 in?
 
-  private DifferentialDriveKinematics kine = new DifferentialDriveKinematics(WHEEL_BASE_M);
+  //private DifferentialDriveKinematics kine = new DifferentialDriveKinematics(WHEEL_BASE_M);
 
   private double[] AUTO_POS = {0, 0}; //start position in meters
 
-  private DifferentialDriveOdometry odo = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(Robot.getAngle())), new Pose2d(AUTO_POS[0], AUTO_POS[1], new Rotation2d()));
+  //private DifferentialDriveOdometry odo = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(Robot.getAngle())), new Pose2d(AUTO_POS[0], AUTO_POS[1], new Rotation2d()));
 
 
 
@@ -63,7 +72,7 @@ public class DriveSystem extends SubsystemBase {
     lf1.follow(left);
     lf2.follow(left);
 
-    right.setInverted(true);
+    /*right.setInverted(true);
     rf1.setInverted(InvertType.FollowMaster);
     rf2.setInverted(InvertType.FollowMaster);
 
@@ -111,13 +120,13 @@ public class DriveSystem extends SubsystemBase {
     lf2.configPeakOutputReverse(-1.0);
 
     left.configPeakCurrentLimit(40);
-    left.enableCurrentLimit(true);
+    left.enableCurrentLimit(true);*/
   }
 
-  public void periodic() {
-    left.set(ControlMode.PercentOutput, lSpeed);
-    right.set(ControlMode.PercentOutput, rSpeed);
-    odo.update(new Rotation2d(Math.toRadians(Robot.getAngle())), rightEnc.getDistance(), leftEnc.getDistance());
+  public void periodic(){
+    left.set(lSpeed);
+    right.set(rSpeed);
+    //odo.update(new Rotation2d(Math.toRadians(Robot.getAngle())), rightEnc.getDistance(), leftEnc.getDistance());
   }
 
   public void setSpeed(double l, double r){
