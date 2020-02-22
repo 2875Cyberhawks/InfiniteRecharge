@@ -1,4 +1,4 @@
-package frc.robot.commands;
+/*package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
@@ -22,3 +22,4 @@ public class PickUp extends CommandBase {
     return false;
   }
 }
+*/

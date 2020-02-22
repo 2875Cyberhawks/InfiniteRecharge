@@ -34,10 +34,10 @@ public class Drive extends CommandBase {
       CommandScheduler.getInstance().schedule(new Align('a'));
     else if(IO.getB())
       CommandScheduler.getInstance().schedule(new Align('b'));
-    else*/ if(turn == 0 && notPaul != 0)
+    else if(turn == 0 && notPaul != 0)
       turn = notPaulDrive();
     else
-      lastAng = gyAng;
+      lastAng = gyAng;*/
 
     double left = MathUtil.clamp(notPaul + turn * T_MULT, -1, 1);
     double right = MathUtil.clamp(notPaul - turn * T_MULT, -1, 1);

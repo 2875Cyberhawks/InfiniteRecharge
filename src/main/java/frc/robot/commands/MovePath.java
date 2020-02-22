@@ -1,4 +1,4 @@
-
+/*
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.controller.RamseteController;
-
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 public class MovePath extends CommandBase {
 
@@ -48,3 +48,4 @@ public class MovePath extends CommandBase {
     return failed;
   }
 }
+*/

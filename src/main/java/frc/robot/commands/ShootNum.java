@@ -5,9 +5,10 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.ShootSystem;
 
-public class ShootNum extends CommandBase {
+/*public class ShootNum extends CommandBase {
   
   private int numBalls = 0;
+ 
   private int shot = 0;
   private Timer time = new Timer();
 
@@ -39,3 +40,4 @@ public class ShootNum extends CommandBase {
     return shot >= numBalls && time.get() >= .25;
   }
 }
+*/

@@ -2,10 +2,10 @@ package frc.robot.commands;
 
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSystem;
+//import frc.robot.subsystems.DriveSystem;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
-public class MoveDist extends CommandBase {
+/*public class MoveDist extends CommandBase {
 
   private double goal;
   private double[] init;
@@ -25,7 +25,7 @@ public class MoveDist extends CommandBase {
   }
 
   public void execute() {
-    double error = goal - avgDist();
+    double error = (goal - avgDist()) / goal;
 
     double move = (DriveSystem.P * error) - (DriveSystem.D * Robot.ds.avgSpeed());
 
@@ -64,3 +64,4 @@ public class MoveDist extends CommandBase {
     return ((pos[0] - init[0]) + (pos[1] - init[1])) / 2;
   }
 }
+*/
