@@ -40,17 +40,19 @@ public class MovePath extends CommandBase {
   }
 
   public void execute() {
-    if(!failed){
+    if(!failed)
       ramCom.execute();
-    }
   }
 
   public void end(boolean interrupted) {
+    if(!failed)
+      ramCom.end();
     Robot.ds.setSpeed(0, 0);
+    
   }
 
   public boolean isFinished() {
-    return failed || ramCom.isFinished;
+    return failed || ramCom.isFinished();
   }
 }
 */
