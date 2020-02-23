@@ -2,21 +2,25 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import edu.wpi.first.wpilibj.Encoder;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Spark;
+
 public class IntakeSystem extends SubsystemBase {
+  
   public static final int[] M_PORTS = {4,5};
   public static final int[] ENC_PORTS = {6,7};
+
   public static TalonSRX angle = new TalonSRX(M_PORTS[0]);
   public static Spark intake = new Spark(M_PORTS[1]);
+  
   private static final double P = 0;
 
   private static final double I = 0;
@@ -30,19 +34,16 @@ public class IntakeSystem extends SubsystemBase {
 
   public static final double inSpeed = 0;
 
+  private boolean limited = true;
 
   public double setpoint = 0;
-
-
-  
-
   
   public IntakeSystem() {
      setpoint = 0;
      angle.configFactoryDefault();
      
  
-    angle.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+     angle.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
  
      angle.configContinuousCurrentLimit(10);
      angle.enableCurrentLimit(true);
@@ -75,10 +76,10 @@ public class IntakeSystem extends SubsystemBase {
     }
     public void moveTo(double input)
     {
-        ang.set(ControlMode.MotionMagic, input);
+        angle.set(ControlMode.MotionMagic, input);//set motor in periodic not in helper methods jrm
         setpoint = input;
     }
-    public void moveInc(posDiff){
+    public void moveInc(double diff){
         if (limited)
         if (getPos() > (MAX_POS) && diff > 0)
             diff = 0;
