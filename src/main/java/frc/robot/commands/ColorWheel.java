@@ -1,5 +1,5 @@
 
-package frc.robot.commands;
+/*package frc.robot.commands;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -81,4 +81,5 @@ public class ColorWheel extends CommandBase {
   public boolean isFinished() {
     return false;
   }
-}
+}*/ 
+//john stop copying random shit from the internet

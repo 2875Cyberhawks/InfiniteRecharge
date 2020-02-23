@@ -81,9 +81,9 @@ public class IntakeSystem extends SubsystemBase {
     }
     public void moveInc(double diff){
         if (limited)
-        if (getPos() > (MAX_POS) && diff > 0)
+        if (angle.getSelectedSensorPosition() > (MAX_POS) && diff > 0)
             diff = 0;
-        else if (getPos() < (MIN_POS) && diff < 0)
+        else if (angle.getSelectedSensorPosition() < (MIN_POS) && diff < 0)
             diff = 0;
     moveTo(setpoint + diff);
     }
