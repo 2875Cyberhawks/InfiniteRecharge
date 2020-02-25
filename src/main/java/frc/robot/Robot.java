@@ -20,7 +20,7 @@ public class Robot extends TimedRobot {
 
   public static ShootSystem ss;
   public static DriveSystem ds;
-
+  public static IntakeSystem is;
   public static PixyCam ballPixy;
   public static PixyCam goalPixy;
 
