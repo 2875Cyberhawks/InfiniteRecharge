@@ -39,7 +39,7 @@ public class Drive extends CommandBase {
     else
       lastAng = gyAng;*/
 
-    double left = MathUtil.clamp(notPaul + turn * T_MULT, -1, 1);
+    double left = -MathUtil.clamp(notPaul + turn * T_MULT, -1, 1);
     double right = MathUtil.clamp(notPaul - turn * T_MULT, -1, 1);
     Robot.ds.setSpeed(left, right);
     
