@@ -32,11 +32,9 @@ public class Climb extends CommandBase {
   @Override
   public void execute() {
     if (IO.getDPadUP())
-        Robot.cs.robotUp();
+        Robot.cs.setSpeed(1);
       else if (IO.getDPadDown())
-        Robot.cs.robotDown();
-      else
-        Robot.cs.stop();
+        Robot.cs.setSpeed(-1);
     if (IO.getA()){
       Robot.cs.toggle();
     }      

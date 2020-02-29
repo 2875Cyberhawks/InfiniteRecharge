@@ -37,9 +37,10 @@ public class IntakeSystem extends SubsystemBase {
   private boolean limited = true;
 
   public double setpoint = 0;
-  
+  public double speed = 0;
   public IntakeSystem() {
      setpoint = 0;
+     speed = 0;
      angle.configFactoryDefault();
      
  
@@ -65,9 +66,8 @@ public class IntakeSystem extends SubsystemBase {
     public void setSetpoint(double s){
         setpoint = s;
     }
-    
-    public void takeIn(){
-        intake.setSpeed(1);
+    public void setSpeed(double input{
+        speed = input;
     }
     public void disable()
     {
@@ -87,7 +87,11 @@ public class IntakeSystem extends SubsystemBase {
             diff = 0;
     moveTo(setpoint + diff);
     }
+    public void toggle(){
+        setpoint = angle.getSelectedSensorPosition() == MAX_POS ? MIN_POS : MAX_POS;
+    }
     public void periodic(){
         angle.set(ControlMode.MotionMagic, setpoint);
+        intake.set(speed);
     }
 }
