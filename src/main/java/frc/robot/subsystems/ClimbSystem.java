@@ -19,13 +19,14 @@ public class ClimbSystem extends SubsystemBase {
   public static final int PWM_PORT = 9;
   public static Spark pulley = new Spark(M_PORT);
   public static Servo lock = new Servo(PWM_PORT);
-  private static int ang = 0;
+  private int ang = 0;
 
   public ClimbSystem() {
     lock.setAngle(0);
   }
+  
   public void toggle(){
-     angle = angle == 0 ?180 :  0;
+    ang = ang == 0 ? 180 : 0;
   }
   public void robotUp(){
     pulley.set(1);
