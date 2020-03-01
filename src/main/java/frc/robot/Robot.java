@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
       double h2 = 1; //height of goal
       double a1 = 1; //angle of camera from ground;
       double a2 = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0); // angle to target
-      return (h2 - h1) / Math.tan(a1 + a2);
+      return (h2 - h1) / Math.tan(Math.toRadians(a1 + a2));
     }
     return -1;
   }
