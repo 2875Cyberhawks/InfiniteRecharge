@@ -9,6 +9,7 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 import frc.robot.util.PixyCam;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 
 
@@ -81,19 +82,27 @@ public class Robot extends TimedRobot {
   }
 
 
-  public static double getAngle()
-    {
-        double gyAng = gyro.getAngle();
+  public static double getAngle(){
+    double gyAng = gyro.getAngle();
 
-        while (gyAng < -180)
-        {
-            gyAng += 360;
-        }
-        while (gyAng > 180)
-        {
-            gyAng -= 360;
-        }
-
-        return gyAng;
+    while (gyAng < -180){
+      gyAng += 360;
     }
+    while (gyAng > 180){
+      gyAng -= 360;
+    }
+
+    return gyAng;
+    }
+
+  public static double getDistance() {
+    if(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1){
+      double h1 = 1; //height of camera
+      double h2 = 1; //height of goal
+      double a1 = 1; //angle of camera from ground;
+      double a2 = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0); // angle to target
+      return (h2 - h1) / Math.tan(a1 + a2);
+    }
+    return -1;
+  }
 }

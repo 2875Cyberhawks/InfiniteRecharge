@@ -81,5 +81,4 @@ public class ColorWheel extends CommandBase {
   public boolean isFinished() {
     return false;
   }
-}*/ 
-//john stop copying random shit from the internet
+}*/
