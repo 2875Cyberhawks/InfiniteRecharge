@@ -1,18 +1,19 @@
-/*package frc.robot.commands;
-
+package frc.robot.commands;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class PickUp extends CommandBase {
-  
+public class PickUp extends ParallelRaceGroup {
+  private final double DIST = 0;
   public PickUp() {
-    addRequirements(Robot.ds, Robot.ss);
+    addCommands(new Succ(),  new MoveDist(DIST));
   }
 
   public void initialize() {
   }
 
   public void execute() {
+    
   }
 
   public void end(boolean interrupted) {
@@ -22,4 +23,3 @@ public class PickUp extends CommandBase {
     return false;
   }
 }
-*/

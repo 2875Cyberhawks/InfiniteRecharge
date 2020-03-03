@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 //import frc.robot.subsystems.DriveSystem;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
-/*public class MoveDist extends CommandBase {
+public class MoveDist extends CommandBase {
 
   private double goal;
   private double[] init;
@@ -64,4 +64,3 @@ import edu.wpi.first.wpiutil.math.MathUtil;
     return ((pos[0] - init[0]) + (pos[1] - init[1])) / 2;
   }
 }
-*/

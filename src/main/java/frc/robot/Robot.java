@@ -19,6 +19,7 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  public static ClimbSystem cs; 
   public static ShootSystem ss;
   public static DriveSystem ds;
   public static IntakeSystem is;
@@ -26,7 +27,7 @@ public class Robot extends TimedRobot {
   public static PixyCam goalPixy;
 
   public static boolean inAuto = false;
-
+  
 
   public static AHRS gyro;
 

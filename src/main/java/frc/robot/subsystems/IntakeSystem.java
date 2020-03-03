@@ -66,30 +66,30 @@ public class IntakeSystem extends SubsystemBase {
     public void setSetpoint(double s){
         setpoint = s;
     }
-    public void setSpeed(double input{
+    public void setSpeed(double input){
         speed = input;
     }
     public void disable()
     {
-        angle.set(ControlMode.PercentOutput, 0);
+        setpoint = 0;
         intake.setSpeed(0);
     }
-    public void moveTo(double input)
-    {
-        angle.set(ControlMode.MotionMagic, input);//set motor in periodic not in helper methods jrm
-        setpoint = input;
-    }
+    
     public void moveInc(double diff){
-        if (limited)
-        if (angle.getSelectedSensorPosition() > (MAX_POS) && diff > 0)
+        if (limited){
+          if (angle.getSelectedSensorPosition() > (MAX_POS) && diff > 0)
             diff = 0;
-        else if (angle.getSelectedSensorPosition() < (MIN_POS) && diff < 0)
+         else if (angle.getSelectedSensorPosition() < (MIN_POS) && diff < 0)
             diff = 0;
-    moveTo(setpoint + diff);
+        }
+    setSetpoint(setpoint + diff);
     }
-    public void toggle(){
-        setpoint = angle.getSelectedSensorPosition() == MAX_POS ? MIN_POS : MAX_POS;
-    }
+
+    
+    
+    // public void toggle(){
+    //     setpoint = angle.getSelectedSensorPosition() == MAX_POS ? MIN_POS : MAX_POS;
+    // }
     public void periodic(){
         angle.set(ControlMode.MotionMagic, setpoint);
         intake.set(speed);

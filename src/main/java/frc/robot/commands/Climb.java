@@ -13,7 +13,8 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Servo;
-
+import frc.robot.Robot;
+import frc.robot.util.IO;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -31,7 +32,7 @@ public class Climb extends CommandBase {
 
   @Override
   public void execute() {
-    if (IO.getDPadUP())
+    if (IO.getDPadUp())
         Robot.cs.setSpeed(1);
       else if (IO.getDPadDown())
         Robot.cs.setSpeed(-1);

@@ -11,7 +11,7 @@ import frc.robot.util.IO;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Intake extends CommandBase {
-
+  public static final SPEED = 1.5;
   public Intake() {
     addRequirements(Robot.is);
   }
@@ -24,11 +24,11 @@ public class Intake extends CommandBase {
   @Override
   public void execute() {
       if (IO.getX()){
-        Robot.is.takeIn();
+        Robot.is.setSpeed(1);
       }
-      if (IO.getY())
+      if (Robot.IO.getTiltation() != 0)
       {
-         Robot.is.toggle();
+         Robot.is.moveInc(Robot.IO.getTiltation() * SPEED);
       }
   }
 
