@@ -32,20 +32,15 @@ public class ShootSystem extends SubsystemBase{
 
   public static TalonSRX sal = new TalonSRX(M_PORTS[0]);
 
-  public static TalonSRX nick = new TalonSRX(M_PORTS[1]);
+  public static TalonSRX nick = new TalonSRX(M_PORTS[1]); 
 
-  public static final double SAL_SPD = 20.25;//25;
-  public static final double NICK_SPD = 44;//44;
-
-  public double setpointS = 0;
-
-  public double setpointN = 0;
+  public double setpoint = 0;
 
   public double dPP = 1.0 / 2048.0;
 
-  public PIDController pidSal = new PIDController(.23, I, .008);
+  public PIDController pidSal = new PIDController(P, I, D);//.23, I, .008);
 
-  public PIDController pidNick = new PIDController(-P, -I, -D);
+  public PIDController pidNick = new PIDController(P, I, D);
 
   public Timer time = new Timer();
 
@@ -69,8 +64,7 @@ public class ShootSystem extends SubsystemBase{
     nick.configPeakOutputForward(1);
     nick.configPeakOutputReverse(-1);
 
-    setpointS = 0;
-    setpointN = 0;
+    setpoint = 0;
 
     pidSal.setTolerance(1);
     pidNick.setTolerance(1);
@@ -84,8 +78,8 @@ public class ShootSystem extends SubsystemBase{
   }
 
   public void periodic() {
-    sal.set(ControlMode.PercentOutput, -MathUtil.clamp((pidSal.calculate(-encSal.getRate(), setpointS) + fSal.calculate(setpointS)) / 12, -1.0 , 1.0));
-    nick.set(ControlMode.PercentOutput, MathUtil.clamp((pidNick.calculate(encNick.getRate(), setpointN) + fNick.calculate(setpointN)) / 12, -1.0, 1.0));
+    sal.set(ControlMode.PercentOutput, MathUtil.clamp((pidSal.calculate(encSal.getRate(), setpoint) + fSal.calculate(setpoint)) / 12, -1.0 , 1.0));
+    nick.set(ControlMode.PercentOutput, MathUtil.clamp((pidNick.calculate(encNick.getRate(), setpoint) + fNick.calculate(setpoint)) / 12, -1.0, 1.0));
     //sal.set(ControlMode.PercentOutput, .5);
     //nick.set(ControlMode.PercentOutput, .5);
     SmartDashboard.putNumber("s volt", sal.getMotorOutputVoltage());
@@ -94,8 +88,7 @@ public class ShootSystem extends SubsystemBase{
     SmartDashboard.putBoolean("n at setpoint", pidNick.atSetpoint());
     SmartDashboard.putNumber("s spd", encSal.getRate());
     SmartDashboard.putNumber("n spd", encNick.getRate());
-    SmartDashboard.putNumber("s set", setpointS);
-    SmartDashboard.putNumber("n set", setpointN);
+    SmartDashboard.putNumber("set", setpoint);
     SmartDashboard.putNumber("s err", pidSal.getPositionError());
     SmartDashboard.putNumber("n err", pidNick.getPositionError());
     SmartDashboard.putNumber("s curr", sal.getStatorCurrent());
@@ -108,9 +101,8 @@ public class ShootSystem extends SubsystemBase{
     nick.set(ControlMode.PercentOutput, 0);
   }
 
-  public void setSetpoint(double s, double n){
-    setpointS = s;
-    setpointN = n;
+  public void setSetpoint(double s){
+    setpoint = s;
   }
 
   public boolean atSetpoint(){
