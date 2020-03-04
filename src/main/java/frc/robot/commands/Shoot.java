@@ -7,7 +7,7 @@ import frc.robot.Robot;
 import frc.robot.util.IO;
 
 public class Shoot extends CommandBase {
-  
+  public static final double FSPEED = .20;
   public Shoot() {
     addRequirements(Robot.ss);
   }
@@ -22,6 +22,7 @@ public class Shoot extends CommandBase {
   public void execute() {
     if(IO.getShoot()){
       Robot.ss.setSetpoint(sOfD(Robot.getDistance()));
+      Robot.ss.setFeed(FSPEED);
     }
     else{
       Robot.ss.setSetpoint(0);

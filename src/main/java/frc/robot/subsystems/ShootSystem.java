@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -15,7 +16,7 @@ public class ShootSystem extends SubsystemBase{
   private static final int [][] E_PORTS = {{4, 5},
                                           {6, 7}};
 
-  private static final int [] M_PORTS = {2, 3};
+  private static final int [] M_PORTS = {2, 3, 0};
 
   private static final double P = .4;// 2:1 -> N: {.4, 0, .013, -.13}, S: {.27, 0, .014, .11}
 
@@ -34,6 +35,8 @@ public class ShootSystem extends SubsystemBase{
 
   public static TalonSRX nick = new TalonSRX(M_PORTS[1]); 
 
+  public static Spark feed = new Spark(M_PORTS[2]);
+
   public double setpoint = 0;
 
   public double dPP = 1.0 / 2048.0;
@@ -44,7 +47,10 @@ public class ShootSystem extends SubsystemBase{
 
   public Timer time = new Timer();
 
+  public double fSpeed = 0;
   public ShootSystem() {
+    fSpeed = 0;
+
     sal.configFactoryDefault();
     nick.configFactoryDefault();
 
@@ -82,6 +88,9 @@ public class ShootSystem extends SubsystemBase{
     nick.set(ControlMode.PercentOutput, MathUtil.clamp((pidNick.calculate(encNick.getRate(), setpoint) + fNick.calculate(setpoint)) / 12, -1.0, 1.0));
     //sal.set(ControlMode.PercentOutput, .5);
     //nick.set(ControlMode.PercentOutput, .5);
+
+    feed.set(fSpeed);
+
     SmartDashboard.putNumber("s volt", sal.getMotorOutputVoltage());
     SmartDashboard.putNumber("n volt", nick.getMotorOutputVoltage());
     SmartDashboard.putBoolean("s at setpoint", pidSal.atSetpoint());
@@ -99,10 +108,15 @@ public class ShootSystem extends SubsystemBase{
   public void stop() {
     sal.set(ControlMode.PercentOutput, 0);
     nick.set(ControlMode.PercentOutput, 0);
+    feed.set(0);
   }
 
   public void setSetpoint(double s){
     setpoint = s;
+  }
+
+  public void setFeed(double input){
+    fSpeed = input;
   }
 
   public boolean atSetpoint(){

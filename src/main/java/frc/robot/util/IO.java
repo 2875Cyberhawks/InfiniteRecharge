@@ -55,7 +55,7 @@ public class IO {
         return xbox.getBumper(Hand.kLeft);
     }
 
-    public static boolean getRBumper{
+    public static boolean getRBumper(){
         return xbox.getBumper(Hand.kRight);
     }
 }
