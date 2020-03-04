@@ -10,16 +10,17 @@ import edu.wpi.first.wpilibj.Spark;
 
 public class IntakeSystem extends SubsystemBase {
   
-  public static final int[] M_PORTS = {4, 5};
+  public static final int[] M_PORTS = {4, 5, 6};
   public static final int[] ENC_PORTS = {6, 7};
 
   public static TalonSRX angle = new TalonSRX(M_PORTS[0]);
   public static Spark intake = new Spark(M_PORTS[1]);
-  
+  public static Spark elevator = new Spark(M_PORTS[2]);
+
   private static final double P = 0;
 
   private static final double I = 0;
-
+  
   private static final double D = 0;
 
   public static Encoder angEnc = new Encoder(ENC_PORTS[0], ENC_PORTS[1]);
@@ -30,12 +31,12 @@ public class IntakeSystem extends SubsystemBase {
   private boolean limited = true;
 
   public double setpoint = 0;
-  public double speed = 0;
-
+  public double inSpeed = 0;
+  public double eSpeed = 0;
   public IntakeSystem() {
    setpoint = 0;
-   speed = 0;
-
+   eSpeed = 0;
+   inSpeed = 0;
    angle.configFactoryDefault();
  
    angle.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
@@ -61,10 +62,14 @@ public class IntakeSystem extends SubsystemBase {
     setpoint = s;
   }
   public void setIntake(double input){
-    speed = input;
+    inSpeed = input;
+  }
+  public void setElevator(double input){
+    eSpeed = input;
   }
   public void disable(){
     setpoint = 0;
+    elevator.setSpeed(0);
     intake.setSpeed(0);
   }
   
@@ -76,6 +81,7 @@ public class IntakeSystem extends SubsystemBase {
 
   public void periodic(){
     angle.set(ControlMode.MotionMagic, setpoint);
-    intake.set(speed);
+    intake.set(inSpeed);
+    elevator.set(eSpeed);
   }
 }

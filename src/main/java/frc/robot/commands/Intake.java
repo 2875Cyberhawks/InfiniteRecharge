@@ -6,7 +6,7 @@ import frc.robot.util.IO;
 public class Intake extends CommandBase {
 
   public static final double SPEED = 4096 * .005;
-
+  public static final double ESPEED = .25;
   public Intake() {
     addRequirements(Robot.is);
   }
@@ -20,6 +20,10 @@ public class Intake extends CommandBase {
 
     if (IO.getTilt() != 0)
       Robot.is.moveInc(IO.getTilt() * SPEED);
+    if (IO.getLBumper())
+      Robot.is.setElevator(-ESPEED);
+    else if(IO.getRBumper())
+      Robot.is.setElevator(ESPEED);
   }
 
   public void end(boolean interrupted) {

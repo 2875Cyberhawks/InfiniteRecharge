@@ -50,4 +50,12 @@ public class IO {
     public static double getIntake() {
         return Math.abs(xbox.getY(Hand.kLeft)) > .1 ? xbox.getY() : 0;
     }
+
+    public static boolean getLBumper(){
+        return xbox.getBumper(Hand.kLeft);
+    }
+
+    public static boolean getRBumper{
+        return xbox.getBumper(Hand.kRight);
+    }
 }
