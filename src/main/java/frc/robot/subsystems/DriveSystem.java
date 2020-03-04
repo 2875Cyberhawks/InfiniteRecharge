@@ -59,7 +59,7 @@ public class DriveSystem extends SubsystemBase {
 
   //private DifferentialDriveKinematics kine = new DifferentialDriveKinematics(WHEEL_BASE_M);
 
-  private double[] AUTO_POS = {0, 0}; //start position in meters
+  //private double[] AUTO_POS = {0, 0}; //start position in meters
 
   //private DifferentialDriveOdometry odo = new DifferentialDriveOdometry(new Rotation2d(Math.toRadians(Robot.getAngle())), new Pose2d(AUTO_POS[0], AUTO_POS[1], new Rotation2d()));
 

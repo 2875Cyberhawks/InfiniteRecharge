@@ -5,12 +5,16 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Servo;
 
 public class ClimbSystem extends SubsystemBase {
+
   public static final int M_PORT = 9;
-  public static final int PWM_PORT = 9;
   public static Spark pulley = new Spark(M_PORT);
-  public static Servo lock = new Servo(PWM_PORT);
+
+  public static final int S_PORT = 0;
+  public static Servo lock = new Servo(S_PORT);
+
   private double ang = 0;
   private double speed = 0;
+
   public ClimbSystem(){
     lock.setAngle(0);
     pulley.setSpeed(0);
@@ -24,7 +28,7 @@ public class ClimbSystem extends SubsystemBase {
   }
   
   public void stop(){
-    ang = 0;
+    ang = 0; //set motors to 0 manually?
     speed = 0;
   }
 

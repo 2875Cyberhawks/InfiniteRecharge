@@ -1,42 +1,31 @@
 package frc.robot.commands;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
-import frc.robot.subsystems.DriveSystem;
-import edu.wpi.first.wpiutil.math.MathUtil;
-import frc.robot.commands.Drive;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.util.IO;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Intake extends CommandBase {
-  public static final SPEED = 1.5;
+
+  public static final double SPEED = 4096 * .005;
+
   public Intake() {
     addRequirements(Robot.is);
   }
-
-  @Override
   public void initialize() {
     Robot.is.setSetpoint(0);
-  };
+    Robot.is.setIntake(0);
+  }
 
-  @Override
   public void execute() {
-      if (IO.getX()){
-        Robot.is.setSpeed(1);
-      }
-      if (Robot.IO.getTiltation() != 0)
-      {
-         Robot.is.moveInc(Robot.IO.getTiltation() * SPEED);
-      }
+    Robot.is.setIntake(IO.getIntake());
+
+    if (IO.getTilt() != 0)
+      Robot.is.moveInc(IO.getTilt() * SPEED);
   }
 
-  @Override
   public void end(boolean interrupted) {
+    Robot.is.setIntake(0);
   }
 
-  @Override
   public boolean isFinished() {
     return false;
   }

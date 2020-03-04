@@ -37,18 +37,17 @@ public class IO {
     public static double getTurn() {
         return Math.abs(joy.getZ()) > .3 ? joy.getZ() : 0;
     }
-    public static boolean getDPadUp(){
-        if (xbox.getPOV() > 0 && ((xbox.getPOV() > 270 && xbox.getPOV() < 360) || (xbox.getPOV()>= 0 && < 90)))
-            return true;
-        else
-            return false;
+    public static boolean getDPadUp() {
+        return xbox.getPOV() == 0;
     }
-    public static boolean getDPadDown(){
-        if (xbox.getPOV() > 0 && (xbox.getPOV()> 90 && xbox.getPOV() <270))
-            return true;
-        else
-            return false;
-    public static double getTiltation(){//intake tilt
-        return Math.abs(xbox.getY(Hand.kright)) > .3 ? xbox.getY() : 0;
-    }        
+    public static boolean getDPadDown() {
+        return xbox.getPOV() == 180;
+    }
+    public static double getTilt() {//intake tilt
+        return Math.abs(xbox.getY(Hand.kRight)) > .1 ? xbox.getY() : 0;
+    }
+    
+    public static double getIntake() {
+        return Math.abs(xbox.getY(Hand.kLeft)) > .1 ? xbox.getY() : 0;
+    }
 }

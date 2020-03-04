@@ -5,28 +5,24 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Succ extends CommandBase {
+
+  public static final double SPEED = .5;
   
   public Succ() {
     addRequirements(Robot.is); 
   }
 
-  
-  @Override
   public void initialize() {
   }
 
-  
-  @Override
   public void execute() {
-    Robot.is.setSpeed(1);
+    Robot.is.setIntake(SPEED);
   }
 
-    @Override
   public void end(boolean interrupted) {
-    Robot.is.setSpeed(0);
+    Robot.is.setIntake(0);
   }
 
-  @Override
   public boolean isFinished() {
     return false;
   }

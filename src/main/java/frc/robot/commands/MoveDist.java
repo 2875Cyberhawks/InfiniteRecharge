@@ -2,12 +2,12 @@ package frc.robot.commands;
 
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-//import frc.robot.subsystems.DriveSystem;
+import frc.robot.subsystems.DriveSystem;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class MoveDist extends CommandBase {
 
-  private double goal;
+  /*private double goal;
   private double[] init;
   public static final double F = .5;
   private double ang;
@@ -62,5 +62,5 @@ public class MoveDist extends CommandBase {
   public double avgDist(){
     double[] pos = Robot.ds.getPositions();
     return ((pos[0] - init[0]) + (pos[1] - init[1])) / 2;
-  }
+  }*/
 }
