@@ -14,8 +14,7 @@ import frc.robot.Robot;
 
 public class ShootSystem extends SubsystemBase{
 
-  private static final int [][] E_PORTS = {{4, 5},
-                                          {6, 7}};
+  private static final int [] E_PORTS = {4, 5};
 
   private static final int [] M_PORTS = {2, 3, 0};
 
@@ -26,11 +25,9 @@ public class ShootSystem extends SubsystemBase{
   private static final double D = .008;//.0125 .45
 
   public static SimpleMotorFeedforward fSal= new SimpleMotorFeedforward(0, .22);
-  public static SimpleMotorFeedforward fNick = new SimpleMotorFeedforward(0, -.22);
+  public static SimpleMotorFeedforward fNick = new SimpleMotorFeedforward(0, .22);
 
-  public static Encoder encSal = new Encoder(E_PORTS[0][0], E_PORTS[0][1]);
-
-  public static Encoder encNick = new Encoder(E_PORTS[1][0], E_PORTS[1][1]);
+  public static Encoder enc = new Encoder(E_PORTS[0], E_PORTS[1]);
 
   public static TalonSRX sal = new TalonSRX(M_PORTS[0]);
 
@@ -82,8 +79,7 @@ public class ShootSystem extends SubsystemBase{
     System.out.println(fSal.calculate(44));
     System.out.println(fNick.calculate(27));
 
-    encSal.setDistancePerPulse(dPP);
-    encNick.setDistancePerPulse(dPP);
+    enc.setDistancePerPulse(dPP);
     time.start();
 
   }
@@ -94,8 +90,8 @@ public class ShootSystem extends SubsystemBase{
       nick.set(ControlMode.PercentOutput, -.4);
     }
     else {
-      sal.set(ControlMode.PercentOutput, MathUtil.clamp((pidSal.calculate(encSal.getRate(), setpoint) + fSal.calculate(setpoint)) / 12, -1.0 , 1.0));
-      nick.set(ControlMode.PercentOutput, MathUtil.clamp((pidNick.calculate(encNick.getRate(), setpoint) + fNick.calculate(setpoint)) / 12, -1.0, 1.0));
+      sal.set(ControlMode.PercentOutput, MathUtil.clamp((pidSal.calculate(enc.getRate(), setpoint) + fSal.calculate(setpoint)) / 12, -1.0 , 1.0));
+      nick.set(ControlMode.PercentOutput, MathUtil.clamp((pidNick.calculate(enc.getRate(), setpoint) + fNick.calculate(setpoint)) / 12, -1.0, 1.0));
     }
     //sal.set(ControlMode.PercentOutput, .5);
     //nick.set(ControlMode.PercentOutput, .5);
@@ -108,8 +104,7 @@ public class ShootSystem extends SubsystemBase{
     SmartDashboard.putNumber("n volt", nick.getMotorOutputVoltage());
     SmartDashboard.putBoolean("s at setpoint", pidSal.atSetpoint());
     SmartDashboard.putBoolean("n at setpoint", pidNick.atSetpoint());
-    SmartDashboard.putNumber("s spd", encSal.getRate());
-    SmartDashboard.putNumber("n spd", encNick.getRate());
+    SmartDashboard.putNumber("shoot spd", enc.getRate());
     SmartDashboard.putNumber("set", setpoint);
     SmartDashboard.putNumber("s err", pidSal.getPositionError());
     SmartDashboard.putNumber("n err", pidNick.getPositionError());
