@@ -20,7 +20,7 @@ public class Intake extends CommandBase {
   public void execute() {
     Robot.is.setIntake(IO.getIntake());
 
-    pos += IO.getTiltUp() && pos < 2 ? 1 : IO.getTiltDown() && pos > 0 ? -1 : 0;
+    pos += IO.getTilt() == 1 && pos < 2 ? 1 : IO.getTilt() == -1 && pos > 0 ? -1 : 0;
     Robot.is.setSetpoint(pos);
     Robot.is.setElevator(IO.getElevator());
   }

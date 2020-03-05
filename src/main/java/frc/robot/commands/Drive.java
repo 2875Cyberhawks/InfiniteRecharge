@@ -30,9 +30,9 @@ public class Drive extends CommandBase {
 
     double turn = IO.getTurn();
     double notPaul = IO.getForward();
-    /*if(IO.getA())
+    /*if(IO.getGoalAlign())
       CommandScheduler.getInstance().schedule(new Align('a'));
-    else if(IO.getB())
+    else if(IO.getBallAlign())
       CommandScheduler.getInstance().schedule(new Align('b'));
     else if(turn == 0 && notPaul != 0)
       turn = notPaulDrive();

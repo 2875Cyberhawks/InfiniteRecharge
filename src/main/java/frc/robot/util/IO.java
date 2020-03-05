@@ -14,19 +14,19 @@ public class IO {
         return xbox.getBumper(Hand.kRight);
     }
 
-    public static boolean getA() {
+    public static boolean getGoalAlign() {
         return xbox.getAButtonPressed();
     }
 
-    public static boolean getY() {
+    public static boolean toggleRatchet() {
         return xbox.getYButtonPressed();
     }
 
-    public static boolean getX() {
+    public static boolean getX() { //unused
         return xbox.getXButtonPressed();
     }
 
-    public static boolean getB() {
+    public static boolean getBallAlign() {
         return xbox.getBButtonPressed();
     }
 
@@ -37,30 +37,15 @@ public class IO {
     public static double getTurn() {
         return Math.abs(joy.getZ()) > .3 ? joy.getZ() : 0;
     }
-    public static boolean getDPadUp() {
-        return xbox.getPOV() == 0;
+    public static int getClimb() {
+        return xbox.getPOV() == 0 ? 1 : xbox.getPOV() == 180 ? -1 : 0;
     }
-    public static boolean getDPadDown() {
-        return xbox.getPOV() == 180;
-    }
-    public static boolean getTiltUp() {//intake tilt
-        return joy.getRawButtonPressed(5);
-    }
-
-    public static boolean getTiltDown() {
-        return joy.getRawButtonPressed(3);
+    public static int getTilt() {//intake tilt
+        return joy.getRawButtonPressed(5) ? 1 : joy.getRawButtonPressed(3) ? -1 : 0;
     }
     
     public static double getIntake() {
         return Math.abs(xbox.getY(Hand.kLeft)) > .1 ? xbox.getY() : 0;
-    }
-
-    public static boolean getLBumper(){
-        return xbox.getBumper(Hand.kLeft);
-    }
-
-    public static boolean getRBumper(){
-        return xbox.getBumper(Hand.kRight);
     }
 
     public static double getElevator() {

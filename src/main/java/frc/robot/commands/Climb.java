@@ -20,12 +20,9 @@ public class Climb extends CommandBase {
     }
 
   public void execute() {
-    if (IO.getDPadUp())
-      Robot.cs.setSpeed(SPEED);
-    else if (IO.getDPadDown())
-      Robot.cs.setSpeed(-SPEED);
+    Robot.cs.setSpeed(IO.getClimb() * SPEED);
       
-    if (IO.getA()){
+    if (IO.toggleRatchet()){
       Robot.cs.toggle();
     }      
   }
