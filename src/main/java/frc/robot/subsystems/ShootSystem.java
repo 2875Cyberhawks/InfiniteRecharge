@@ -24,8 +24,7 @@ public class ShootSystem extends SubsystemBase{
 
   private static final double D = .008;//.0125 .45
 
-  public static SimpleMotorFeedforward fSal= new SimpleMotorFeedforward(0, .22);
-  public static SimpleMotorFeedforward fNick = new SimpleMotorFeedforward(0, .22);
+  public static SimpleMotorFeedforward ff= new SimpleMotorFeedforward(0, .22);
 
   public static Encoder enc = new Encoder(E_PORTS[0], E_PORTS[1]);
 
@@ -39,9 +38,7 @@ public class ShootSystem extends SubsystemBase{
 
   public double dPP = 1.0 / 2048.0;
 
-  public PIDController pidSal = new PIDController(P, I, D);//.23, I, .008);
-
-  public PIDController pidNick = new PIDController(P, I, D);
+  public PIDController pid = new PIDController(P, I, D);//.23, I, .008);
 
   public Timer time = new Timer();
 
@@ -74,8 +71,8 @@ public class ShootSystem extends SubsystemBase{
 
     setpoint = 0;
 
-    pidSal.setTolerance(1);
-    pidNick.setTolerance(1);
+    pid.setTolerance(1);
+    pid.setTolerance(1);
     System.out.println(fSal.calculate(44));
     System.out.println(fNick.calculate(27));
 
@@ -90,8 +87,8 @@ public class ShootSystem extends SubsystemBase{
       nick.set(ControlMode.PercentOutput, -.4);
     }
     else {
-      sal.set(ControlMode.PercentOutput, MathUtil.clamp((pidSal.calculate(enc.getRate(), setpoint) + fSal.calculate(setpoint)) / 12, -1.0 , 1.0));
-      nick.set(ControlMode.PercentOutput, MathUtil.clamp((pidNick.calculate(enc.getRate(), setpoint) + fNick.calculate(setpoint)) / 12, -1.0, 1.0));
+      sal.set(ControlMode.PercentOutput, MathUtil.clamp((pid.calculate(enc.getRate(), setpoint) + ff.calculate(setpoint)) / 12, -1.0 , 1.0));
+      nick.set(ControlMode.PercentOutput, MathUtil.clamp((pid.calculate(enc.getRate(), setpoint) + ff.calculate(setpoint)) / 12, -1.0, 1.0));
     }
     //sal.set(ControlMode.PercentOutput, .5);
     //nick.set(ControlMode.PercentOutput, .5);
@@ -102,12 +99,10 @@ public class ShootSystem extends SubsystemBase{
 
     SmartDashboard.putNumber("s volt", sal.getMotorOutputVoltage());
     SmartDashboard.putNumber("n volt", nick.getMotorOutputVoltage());
-    SmartDashboard.putBoolean("s at setpoint", pidSal.atSetpoint());
-    SmartDashboard.putBoolean("n at setpoint", pidNick.atSetpoint());
+    SmartDashboard.putBoolean("at setpoint", pid.atSetpoint());
     SmartDashboard.putNumber("shoot spd", enc.getRate());
     SmartDashboard.putNumber("set", setpoint);
-    SmartDashboard.putNumber("s err", pidSal.getPositionError());
-    SmartDashboard.putNumber("n err", pidNick.getPositionError());
+    SmartDashboard.putNumber("err", pid.getPositionError());
     SmartDashboard.putNumber("s curr", sal.getStatorCurrent());
     SmartDashboard.putNumber("n curr", nick.getStatorCurrent());
     //System.out.println(time.get() + " " + pidSal.getPositionError() + " " + pidNick.getPositionError());
@@ -136,7 +131,7 @@ public class ShootSystem extends SubsystemBase{
   }
 
   public boolean atSetpoint(){
-    return pidSal.atSetpoint() && pidNick.atSetpoint() && prevCur - avgCur() < 2;
+    return pid.atSetpoint() && pid.atSetpoint() && prevCur - avgCur() < 2;
   }
 
 }
