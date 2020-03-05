@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Robot;
 
 public class ShootSystem extends SubsystemBase{
 
@@ -48,6 +49,8 @@ public class ShootSystem extends SubsystemBase{
   public Timer time = new Timer();
 
   public boolean backwards = false;
+
+  public double prevCur = 0;
 
   public double fSpeed = 0;
   public ShootSystem() {
@@ -98,6 +101,8 @@ public class ShootSystem extends SubsystemBase{
     //nick.set(ControlMode.PercentOutput, .5);
 
     feed.set(fSpeed);
+    Robot.atSpeed = atSetpoint();
+    prevCur = avgCur();
 
     SmartDashboard.putNumber("s volt", sal.getMotorOutputVoltage());
     SmartDashboard.putNumber("n volt", nick.getMotorOutputVoltage());
@@ -131,8 +136,12 @@ public class ShootSystem extends SubsystemBase{
     backwards = back;
   }
 
+  public double avgCur() {
+    return (sal.getStatorCurrent() + nick.getStatorCurrent()) / 2;
+  }
+
   public boolean atSetpoint(){
-    return pidSal.atSetpoint() && pidNick.atSetpoint();
+    return pidSal.atSetpoint() && pidNick.atSetpoint() && prevCur - avgCur() < 2;
   }
 
 }

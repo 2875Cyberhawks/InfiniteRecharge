@@ -26,8 +26,9 @@ public class Robot extends TimedRobot {
   public static PixyCam ballPixy;
   public static PixyCam goalPixy;
 
+  public static boolean atSpeed = false;
+
   public static boolean inAuto = false;
-  
 
   public static AHRS gyro;
 
@@ -44,12 +45,6 @@ public class Robot extends TimedRobot {
     gyro.reset();
   }
 
-  public void robotPeriodic() {
-
-  }
-
-  
-
   public void autonomousInit() {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
@@ -58,7 +53,6 @@ public class Robot extends TimedRobot {
     gyro.reset();
   }
 
-  
   public void autonomousPeriodic() {
     switch (m_autoSelected) {
       case kCustomAuto:
@@ -81,7 +75,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     CommandScheduler.getInstance().run();
   }
-
 
   public static double getAngle(){
     double gyAng = gyro.getAngle();
