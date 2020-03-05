@@ -47,6 +47,8 @@ public class ShootSystem extends SubsystemBase{
 
   public Timer time = new Timer();
 
+  public boolean backwards = false;
+
   public double fSpeed = 0;
   public ShootSystem() {
     fSpeed = 0;
@@ -84,8 +86,14 @@ public class ShootSystem extends SubsystemBase{
   }
 
   public void periodic() {
-    sal.set(ControlMode.PercentOutput, MathUtil.clamp((pidSal.calculate(encSal.getRate(), setpoint) + fSal.calculate(setpoint)) / 12, -1.0 , 1.0));
-    nick.set(ControlMode.PercentOutput, MathUtil.clamp((pidNick.calculate(encNick.getRate(), setpoint) + fNick.calculate(setpoint)) / 12, -1.0, 1.0));
+    if(backwards){
+      sal.set(ControlMode.PercentOutput, -.4);
+      nick.set(ControlMode.PercentOutput, -.4);
+    }
+    else {
+      sal.set(ControlMode.PercentOutput, MathUtil.clamp((pidSal.calculate(encSal.getRate(), setpoint) + fSal.calculate(setpoint)) / 12, -1.0 , 1.0));
+      nick.set(ControlMode.PercentOutput, MathUtil.clamp((pidNick.calculate(encNick.getRate(), setpoint) + fNick.calculate(setpoint)) / 12, -1.0, 1.0));
+    }
     //sal.set(ControlMode.PercentOutput, .5);
     //nick.set(ControlMode.PercentOutput, .5);
 
@@ -117,6 +125,10 @@ public class ShootSystem extends SubsystemBase{
 
   public void setFeed(double input){
     fSpeed = input;
+  }
+
+  public void setBackwards(boolean back) {
+    backwards = back;
   }
 
   public boolean atSetpoint(){

@@ -10,8 +10,8 @@ public class IO {
 
     private static XboxController xbox = new XboxController(1);
 
-    public static boolean getShoot() {
-        return xbox.getBumper(Hand.kRight);
+    public static int getShoot() {
+        return xbox.getBumper(Hand.kRight) ? 1 : xbox.getBumper(Hand.kLeft) ? -1 : 0;
     }
 
     public static boolean getGoalAlign() {

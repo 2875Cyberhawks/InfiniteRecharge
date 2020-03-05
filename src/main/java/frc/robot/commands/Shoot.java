@@ -20,11 +20,17 @@ public class Shoot extends CommandBase {
 
 
   public void execute() {
-    if(IO.getShoot()){
+    int status = IO.getShoot();
+    if(status == 1){
       Robot.ss.setSetpoint(sOfD(Robot.getDistance()));
       Robot.ss.setFeed(FSPEED);
+      Robot.ss.setBackwards(false);
+    }
+    else if(status == -1){
+      Robot.ss.setBackwards(true);
     }
     else{
+      Robot.ss.setBackwards(false);
       Robot.ss.setSetpoint(0);
     }
   }
