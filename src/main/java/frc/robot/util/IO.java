@@ -43,8 +43,12 @@ public class IO {
     public static boolean getDPadDown() {
         return xbox.getPOV() == 180;
     }
-    public static double getTilt() {//intake tilt
-        return Math.abs(xbox.getY(Hand.kRight)) > .1 ? xbox.getY() : 0;
+    public static boolean getTiltUp() {//intake tilt
+        return joy.getRawButtonPressed(5);
+    }
+
+    public static boolean getTiltDown() {
+        return joy.getRawButtonPressed(3);
     }
     
     public static double getIntake() {
@@ -57,5 +61,9 @@ public class IO {
 
     public static boolean getRBumper(){
         return xbox.getBumper(Hand.kRight);
+    }
+
+    public static double getElevator() {
+        return Math.abs(xbox.getY()) > .1 ? xbox.getY() : 0;
     }
 }

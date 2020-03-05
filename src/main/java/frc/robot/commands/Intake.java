@@ -5,8 +5,10 @@ import frc.robot.util.IO;
 
 public class Intake extends CommandBase {
 
-  public static final double SPEED = 4096 * .005;
+  //public static final double SPEED = 4096 * .005;
+  private int pos = 0;
   public static final double ESPEED = .25;
+
   public Intake() {
     addRequirements(Robot.is);
   }
@@ -18,12 +20,9 @@ public class Intake extends CommandBase {
   public void execute() {
     Robot.is.setIntake(IO.getIntake());
 
-    if (IO.getTilt() != 0)
-      Robot.is.moveInc(IO.getTilt() * SPEED);
-    if (IO.getLBumper())
-      Robot.is.setElevator(-ESPEED);
-    else if(IO.getRBumper())
-      Robot.is.setElevator(ESPEED);
+    pos += IO.getTiltUp() && pos < 2 ? 1 : IO.getTiltDown() && pos > 0 ? -1 : 0;
+    Robot.is.setSetpoint(pos);
+    Robot.is.setElevator(IO.getElevator());
   }
 
   public void end(boolean interrupted) {

@@ -28,11 +28,16 @@ public class IntakeSystem extends SubsystemBase {
   public static final double MIN_POS = 0;
   public static final double MAX_POS = 0;
 
-  private boolean limited = true;
+  //private boolean limited = true;
 
   public double setpoint = 0;
   public double inSpeed = 0;
   public double eSpeed = 0;
+  public int curCount = 0;
+  //public boolean spedUp = false;
+  public double prevCur = 0;
+  public double prevVel = 0;
+
   public IntakeSystem() {
    setpoint = 0;
    eSpeed = 0;
@@ -58,30 +63,42 @@ public class IntakeSystem extends SubsystemBase {
  
    angle.setSelectedSensorPosition(0); 
   }
-  public void setSetpoint(double s){
-    setpoint = s;
+
+  public void setSetpoint(int pos){
+    setpoint = pos == 0 ? 0 : MAX_POS / pos == 1 ? 2 : 1;
   }
+
   public void setIntake(double input){
     inSpeed = input;
   }
+
   public void setElevator(double input){
     eSpeed = input;
   }
+
   public void disable(){
     setpoint = 0;
     elevator.setSpeed(0);
     intake.setSpeed(0);
   }
   
-  public void moveInc(double diff){
+  /*public void moveInc(double diff){
     diff = limited && ((angle.getSelectedSensorPosition() > (MAX_POS) && diff > 0) 
     || (angle.getSelectedSensorPosition() < (MIN_POS) && diff < 0)) ? 0 : diff;
     setSetpoint(setpoint + diff);
-  }
+  }*/
 
   public void periodic(){
     angle.set(ControlMode.MotionMagic, setpoint);
     intake.set(inSpeed);
     elevator.set(eSpeed);
+
+    if(setpoint == 0){
+      if(Math.abs(angle.getStatorCurrent() - prevCur) > 5 /*&& Math.abs(angle.getSelectedSensorVelocity()) < 2*/ && angle.getSelectedSensorVelocity() - prevVel <= 0)
+        angle.setSelectedSensorPosition(0);
+    
+    prevCur = angle.getStatorCurrent();
+    prevVel = angle.getSelectedSensorVelocity();
+    }
   }
 }
