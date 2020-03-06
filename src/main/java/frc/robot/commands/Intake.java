@@ -1,7 +1,7 @@
 package frc.robot.commands;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.util.IO;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Intake extends CommandBase {
 
@@ -12,6 +12,7 @@ public class Intake extends CommandBase {
   public Intake() {
     addRequirements(Robot.is);
   }
+
   public void initialize() {
     Robot.is.setSetpoint(0);
     Robot.is.setIntake(0);
@@ -20,7 +21,8 @@ public class Intake extends CommandBase {
   public void execute() {
     Robot.is.setIntake(IO.getIntake());
 
-    pos += IO.getTilt() == 1 && pos < 2 ? 1 : IO.getTilt() == -1 && pos > 0 ? -1 : 0;
+    int status = IO.getTilt();
+    pos += status == 1 && pos < 2 ? 1 : status == -1 && pos > 0 ? -1 : 0;
     Robot.is.setSetpoint(pos);
 
     if(IO.getShoot() == 1 && Robot.atSpeed)
@@ -30,7 +32,7 @@ public class Intake extends CommandBase {
   }
 
   public void end(boolean interrupted) {
-    Robot.is.setIntake(0);
+    Robot.is.disable();
   }
 
   public boolean isFinished() {

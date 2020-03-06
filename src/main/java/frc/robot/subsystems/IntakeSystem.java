@@ -2,7 +2,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Encoder;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -11,7 +10,6 @@ import edu.wpi.first.wpilibj.Spark;
 public class IntakeSystem extends SubsystemBase {
   
   public static final int[] M_PORTS = {4, 5, 6};
-  public static final int[] ENC_PORTS = {6, 7};
 
   public static TalonSRX angle = new TalonSRX(M_PORTS[0]);
   public static Spark intake = new Spark(M_PORTS[1]);
@@ -23,10 +21,8 @@ public class IntakeSystem extends SubsystemBase {
   
   private static final double D = 0;
 
-  public static Encoder angEnc = new Encoder(ENC_PORTS[0], ENC_PORTS[1]);
-
-  public static final double MIN_POS = 0;
-  public static final double MAX_POS = 0;
+  public static final int MIN_POS = 0;
+  public static final int MAX_POS = 0;
 
   //private boolean limited = true;
 
@@ -61,7 +57,7 @@ public class IntakeSystem extends SubsystemBase {
    angle.config_kD(0, D);
    angle.config_kF(0, 0);
  
-   angle.setSelectedSensorPosition(0); 
+   angle.setSelectedSensorPosition(MAX_POS); 
   }
 
   public void setSetpoint(int pos){
@@ -77,7 +73,7 @@ public class IntakeSystem extends SubsystemBase {
   }
 
   public void disable(){
-    setpoint = 0;
+    angle.set(ControlMode.PercentOutput, 0);
     elevator.setSpeed(0);
     intake.setSpeed(0);
   }

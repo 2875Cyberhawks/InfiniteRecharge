@@ -40,7 +40,7 @@ public class IO {
     public static int getClimb() {
         return xbox.getPOV() == 0 ? 1 : xbox.getPOV() == 180 ? -1 : 0;
     }
-    public static int getTilt() {//intake tilt
+    public static int getTilt() {
         return joy.getRawButtonPressed(5) ? 1 : joy.getRawButtonPressed(3) ? -1 : 0;
     }
     

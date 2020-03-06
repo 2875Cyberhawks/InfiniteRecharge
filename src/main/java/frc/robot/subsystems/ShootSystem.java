@@ -9,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpiutil.math.MathUtil;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
 
 public class ShootSystem extends SubsystemBase{
@@ -40,13 +39,12 @@ public class ShootSystem extends SubsystemBase{
 
   public PIDController pid = new PIDController(P, I, D);//.23, I, .008);
 
-  public Timer time = new Timer();
-
   public boolean backwards = false;
 
   public double prevCur = 0;
 
   public double fSpeed = 0;
+
   public ShootSystem() {
     fSpeed = 0;
 
@@ -73,11 +71,8 @@ public class ShootSystem extends SubsystemBase{
 
     pid.setTolerance(1);
     pid.setTolerance(1);
-    System.out.println(fSal.calculate(44));
-    System.out.println(fNick.calculate(27));
 
     enc.setDistancePerPulse(dPP);
-    time.start();
 
   }
 
