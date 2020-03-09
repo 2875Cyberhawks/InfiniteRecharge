@@ -15,15 +15,15 @@ public class ShootSystem extends SubsystemBase{
 
   private static final int [] E_PORTS = {4, 5};
 
-  private static final int [] M_PORTS = {2, 3, 0};
+  private static final int [] M_PORTS = {1, 3, 2};
 
-  private static final double P = .4;// 2:1 -> N: {.4, 0, .013, -.13}, S: {.27, 0, .014, .11}
+  private static final double P = .04;
 
   private static final double I = 0;
 
-  private static final double D = .008;//.0125 .45
+  private static final double D = .0002;
 
-  public static SimpleMotorFeedforward ff= new SimpleMotorFeedforward(0, .22);
+  public static SimpleMotorFeedforward ff= new SimpleMotorFeedforward(0, .152);
 
   public static Encoder enc = new Encoder(E_PORTS[0], E_PORTS[1]);
 
@@ -37,7 +37,7 @@ public class ShootSystem extends SubsystemBase{
 
   public double dPP = 1.0 / 2048.0;
 
-  public PIDController pid = new PIDController(P, I, D);//.23, I, .008);
+  public PIDController pid = new PIDController(P, I, D);//.005, 0, .0001, .58
 
   public boolean backwards = false;
 

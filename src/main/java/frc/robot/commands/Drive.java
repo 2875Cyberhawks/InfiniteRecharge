@@ -63,7 +63,7 @@ public class Drive extends CommandBase {
 
   public void end(boolean interrupted) {
     Robot.ds.setSpeed(0, 0);
-    Robot.gyro.reset();
+    Robot.gyro.reset(); // might mess with align
   }
 
   public boolean isFinished() {
