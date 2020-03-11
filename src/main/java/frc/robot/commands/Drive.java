@@ -28,7 +28,7 @@ public class Drive extends CommandBase {
   public void execute() {
     gyAng = Robot.getAngle();
 
-    double turn = IO.getTurn();
+    double turn = -IO.getTurn();
     double notPaul = IO.getForward();
     /*if(IO.getGoalAlign())
       CommandScheduler.getInstance().schedule(new Align('a'));

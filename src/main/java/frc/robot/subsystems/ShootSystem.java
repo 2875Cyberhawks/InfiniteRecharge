@@ -13,33 +13,49 @@ import frc.robot.Robot;
 
 public class ShootSystem extends SubsystemBase{
 
-  private static final int [] E_PORTS = {4, 5};
+  private static final int [] E_PORTS = {4, 5, 6, 7};
 
   private static final int [] M_PORTS = {1, 3, 2};
 
-  private static final double P = .04;
+  private static final double PS = .04;
 
-  private static final double I = 0;
+  private static final double IS = 0;
 
-  private static final double D = .0002;
+  private static final double DS = .0002;
 
-  public static SimpleMotorFeedforward ff= new SimpleMotorFeedforward(0, .152);
+  public static SimpleMotorFeedforward ffs = new SimpleMotorFeedforward(0, .152);
 
-  public static Encoder enc = new Encoder(E_PORTS[0], E_PORTS[1]);
+  public static Encoder encS = new Encoder(E_PORTS[0], E_PORTS[1]);
+
+  public static Encoder encF = new Encoder(E_PORTS[2], E_PORTS[3]);
 
   public static TalonSRX sal = new TalonSRX(M_PORTS[0]);
 
   public static TalonSRX nick = new TalonSRX(M_PORTS[1]); 
 
-  public static Spark feed = new Spark(M_PORTS[2]);
+  public static TalonSRX feed = new TalonSRX(M_PORTS[2]);
 
-  public double setpoint = 0;
+  public static final double PF = .05;
+
+  public static final double IF = 0;
+
+  public static final double DF = .0001;
+
+  public static SimpleMotorFeedforward fff = new SimpleMotorFeedforward(0, .58);
+
+  public double setpointS = 0;
+
+  public double setpointF = 0;
 
   public double dPP = 1.0 / 2048.0;
 
-  public PIDController pid = new PIDController(P, I, D);//.005, 0, .0001, .58
+  public PIDController pidS = new PIDController(PS, IS, DS);
 
-  public boolean backwards = false;
+  public PIDController pidF = new PIDController(PF, IF, DF);
+
+  public boolean backwardsS = false;
+
+  public boolean backwardsF = false;
 
   public double prevCur = 0;
 
@@ -67,58 +83,73 @@ public class ShootSystem extends SubsystemBase{
     nick.configPeakOutputForward(1);
     nick.configPeakOutputReverse(-1);
 
-    setpoint = 0;
+    setpointS = 0;
+    setpointF = 0;
 
-    pid.setTolerance(1);
-    pid.setTolerance(1);
+    pidS.setTolerance(1);
+    pidF.setTolerance(1);
 
-    enc.setDistancePerPulse(dPP);
-
+    encS.setDistancePerPulse(dPP);
+    encF.setDistancePerPulse(dPP);
   }
 
   public void periodic() {
-    if(backwards){
-      sal.set(ControlMode.PercentOutput, -.4);
-      nick.set(ControlMode.PercentOutput, -.4);
+    if(backwardsS){
+      sal.set(ControlMode.PercentOutput, .4);
+      nick.set(ControlMode.PercentOutput, .4);
+    }else{ 
+      sal.set(ControlMode.PercentOutput, -MathUtil.clamp((pidS.calculate(encS.getRate(), setpointS) + ffs.calculate(setpointS)) / 12, -1.0 , 1.0));
+      nick.set(ControlMode.PercentOutput, -MathUtil.clamp((pidS.calculate(encS.getRate(), setpointS) + ffs.calculate(setpointS)) / 12, -1.0, 1.0));
     }
-    else {
-      sal.set(ControlMode.PercentOutput, MathUtil.clamp((pid.calculate(enc.getRate(), setpoint) + ff.calculate(setpoint)) / 12, -1.0 , 1.0));
-      nick.set(ControlMode.PercentOutput, MathUtil.clamp((pid.calculate(enc.getRate(), setpoint) + ff.calculate(setpoint)) / 12, -1.0, 1.0));
-    }
+
+    if(backwardsF)
+      feed.set(ControlMode.PercentOutput, .4);
+    else
+      feed.set(ControlMode.PercentOutput, MathUtil.clamp((pidF.calculate(encF.getRate(), setpointF) + fff.calculate(setpointF)) / 12, -1.0, 1.0));
+    
     //sal.set(ControlMode.PercentOutput, .5);
     //nick.set(ControlMode.PercentOutput, .5);
 
-    feed.set(fSpeed);
     Robot.atSpeed = atSetpoint();
     prevCur = avgCur();
+    SmartDashboard.putNumber("f spd", encF.getRate());
 
-    SmartDashboard.putNumber("s volt", sal.getMotorOutputVoltage());
+    /*SmartDashboard.putNumber("s volt", sal.getMotorOutputVoltage());
     SmartDashboard.putNumber("n volt", nick.getMotorOutputVoltage());
     SmartDashboard.putBoolean("at setpoint", pid.atSetpoint());
     SmartDashboard.putNumber("shoot spd", enc.getRate());
-    SmartDashboard.putNumber("set", setpoint);
-    SmartDashboard.putNumber("err", pid.getPositionError());
+    SmartDashboard.putNumber("set", setpoint);*/
+    SmartDashboard.putNumber("shoot err", pidS.getPositionError());
+    SmartDashboard.putNumber("feed err", pidF.getPositionError());/*
     SmartDashboard.putNumber("s curr", sal.getStatorCurrent());
     SmartDashboard.putNumber("n curr", nick.getStatorCurrent());
-    //System.out.println(time.get() + " " + pidSal.getPositionError() + " " + pidNick.getPositionError());
+    //System.out.println(time.get() + " " + pidSal.getPositionError() + " " + pidNick.getPositionError());*/
   }
 
   public void stop() {
     sal.set(ControlMode.PercentOutput, 0);
     nick.set(ControlMode.PercentOutput, 0);
-    feed.set(0);
+    feed.set(ControlMode.PercentOutput, 0);
   }
 
-  public void setSetpoint(double s){
-    setpoint = s;
+  public void setSetpointS(double s){
+    setpointS = s;
+  }
+
+  public void setSetpointF(double s){
+    setpointF = s;
   }
 
   public void setFeed(double input){
     fSpeed = input;
   }
 
-  public void setBackwards(boolean back) {
-    backwards = back;
+  public void setBackwardsS(boolean back) {
+    backwardsS = back;
+  }
+
+  public void setBackwardsF(boolean back) {
+    backwardsF = back;
   }
 
   public double avgCur() {
@@ -126,7 +157,7 @@ public class ShootSystem extends SubsystemBase{
   }
 
   public boolean atSetpoint(){
-    return pid.atSetpoint() && pid.atSetpoint() && prevCur - avgCur() < 2;
+    return pidS.atSetpoint() && pidF.atSetpoint() && prevCur - avgCur() < 2;
   }
 
 }

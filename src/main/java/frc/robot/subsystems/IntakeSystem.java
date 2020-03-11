@@ -3,17 +3,18 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Spark;
 
 public class IntakeSystem extends SubsystemBase {
   
-  public static final int[] M_PORTS = {4, 5, 6};
+  public static final int[] M_PORTS = {7, 0, 6};
 
   public static TalonSRX angle = new TalonSRX(M_PORTS[0]);
-  public static Spark intake = new Spark(M_PORTS[1]);
-  public static Spark elevator = new Spark(M_PORTS[2]);
+  public static VictorSPX intake = new VictorSPX(M_PORTS[1]);
+  public static VictorSPX elevator = new VictorSPX(M_PORTS[2]);
 
   private static final double P = 0;
 
@@ -38,7 +39,7 @@ public class IntakeSystem extends SubsystemBase {
    setpoint = 0;
    eSpeed = 0;
    inSpeed = 0;
-   angle.configFactoryDefault();
+   /*angle.configFactoryDefault();
  
    angle.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
  
@@ -55,9 +56,9 @@ public class IntakeSystem extends SubsystemBase {
    angle.config_kP(0, P);
    angle.config_kI(0, I); 
    angle.config_kD(0, D);
-   angle.config_kF(0, 0);
+   angle.config_kF(0, 0);*/
  
-   angle.setSelectedSensorPosition(MAX_POS); 
+   //angle.setSelectedSensorPosition(MAX_POS); 
   }
 
   public void setSetpoint(int pos){
@@ -73,9 +74,9 @@ public class IntakeSystem extends SubsystemBase {
   }
 
   public void disable(){
-    angle.set(ControlMode.PercentOutput, 0);
-    elevator.setSpeed(0);
-    intake.setSpeed(0);
+   // angle.set(ControlMode.PercentOutput, 0);
+    elevator.set(ControlMode.PercentOutput, 0);
+    intake.set(ControlMode.PercentOutput, 0);
   }
   
   /*public void moveInc(double diff){
@@ -85,16 +86,16 @@ public class IntakeSystem extends SubsystemBase {
   }*/
 
   public void periodic(){
-    angle.set(ControlMode.MotionMagic, setpoint);
-    intake.set(inSpeed);
-    elevator.set(eSpeed);
+    //angle.set(ControlMode.MotionMagic, setpoint);
+    intake.set(ControlMode.PercentOutput, inSpeed);
+    elevator.set(ControlMode.PercentOutput, eSpeed);
 
-    if(setpoint == 0){
-      if(Math.abs(angle.getStatorCurrent() - prevCur) > 5 /*&& Math.abs(angle.getSelectedSensorVelocity()) < 2*/ && angle.getSelectedSensorVelocity() - prevVel <= 0)
-        angle.setSelectedSensorPosition(0);
+    //if(setpoint == 0){
+     // if(Math.abs(angle.getStatorCurrent() - prevCur) > 5 /*&& Math.abs(angle.getSelectedSensorVelocity()) < 2*/ && angle.getSelectedSensorVelocity() - prevVel <= 0)
+       // angle.setSelectedSensorPosition(0);
     
-    prevCur = angle.getStatorCurrent();
-    prevVel = angle.getSelectedSensorVelocity();
+    //prevCur = angle.getStatorCurrent();
+    //prevVel = angle.getSelectedSensorVelocity();
     }
   }
-}
+

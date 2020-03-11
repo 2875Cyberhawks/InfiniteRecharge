@@ -45,10 +45,10 @@ public class IO {
     }
     
     public static double getIntake() {
-        return Math.abs(xbox.getY(Hand.kLeft)) > .1 ? xbox.getY() : 0;
+        return Math.abs(xbox.getY(Hand.kLeft)) > .1 ? xbox.getY(Hand.kLeft) : 0;
     }
 
     public static double getElevator() {
-        return Math.abs(xbox.getY()) > .1 ? xbox.getY() : 0;
+        return Math.abs(xbox.getY(Hand.kRight)) > .1 ? xbox.getY(Hand.kRight) : 0;
     }
 }

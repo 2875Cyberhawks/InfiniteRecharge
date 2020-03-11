@@ -20,15 +20,15 @@ public class Intake extends CommandBase {
 
   public void execute() {
     Robot.is.setIntake(IO.getIntake());
-
-    int status = IO.getTilt();
+    Robot.is.setElevator(IO.getElevator());
+    /*int status = IO.getTilt();
     pos += status == 1 && pos < 2 ? 1 : status == -1 && pos > 0 ? -1 : 0;
     Robot.is.setSetpoint(pos);
 
     if(IO.getShoot() == 1 && Robot.atSpeed)
       Robot.is.setElevator(ESPEED);
     else if(IO.getShoot() != 1)
-      Robot.is.setElevator(IO.getElevator());
+      Robot.is.setElevator(IO.getElevator());*/
   }
 
   public void end(boolean interrupted) {

@@ -7,14 +7,15 @@ import frc.robot.Robot;
 import frc.robot.util.IO;
 
 public class Shoot extends CommandBase {
-  public static final double FSPEED = .20;
+  public static final double FSPEED = -15;
   public Shoot() {
     addRequirements(Robot.ss);
   }
 
   
   public void initialize() {
-    Robot.ss.setSetpoint(0);
+    Robot.ss.setSetpointS(0);
+    Robot.ss.setSetpointF(0);
     Robot.ss.stop();
   }
 
@@ -22,21 +23,25 @@ public class Shoot extends CommandBase {
   public void execute() {
     int status = IO.getShoot();
     if(status == 1){
-      Robot.ss.setSetpoint(sOfD(Robot.getDistance()));
-      Robot.ss.setFeed(FSPEED);
-      Robot.ss.setBackwards(false);
+      Robot.ss.setSetpointS(sOfD(Robot.getDistance()));
+      Robot.ss.setSetpointF(FSPEED);
+      Robot.ss.setBackwardsS(false);
+      Robot.ss.setBackwardsF(false);
     }
     else if(status == -1){
-      Robot.ss.setBackwards(true);
+      //Robot.ss.setBackwardsS(true);
+      Robot.ss.setBackwardsF(true);
     }
     else{
-      Robot.ss.setBackwards(false);
-      Robot.ss.setSetpoint(0);
+      Robot.ss.setBackwardsS(false);
+      Robot.ss.setBackwardsF(false);
+      Robot.ss.setSetpointS(0);
+      Robot.ss.setSetpointF(0);
     }
   }
 
   public void end(boolean interrupted) {
-    Robot.ss.setSetpoint(0);
+    Robot.ss.stop();
   }
 
   public boolean isFinished() {
@@ -44,6 +49,6 @@ public class Shoot extends CommandBase {
   }
 
   public double sOfD(double d){
-    return 0; //s(d): speed function wrt distance
+    return 60; //s(d): speed function wrt distance
   }
 }
