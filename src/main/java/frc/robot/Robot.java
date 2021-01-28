@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
   public static ClimbSystem cs; 
   public static ShootSystem ss;
   public static DriveSystem ds;
+  
   public static IntakeSystem is;
   public static PixyCam ballPixy;
   public static PixyCam goalPixy;
@@ -100,6 +101,6 @@ public class Robot extends TimedRobot {
       double a2 = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0); // angle to target
       return (h2 - h1) / Math.tan(Math.toRadians(a1 + a2));
     }
-    return -1;
+    return -1; 
   }
 }

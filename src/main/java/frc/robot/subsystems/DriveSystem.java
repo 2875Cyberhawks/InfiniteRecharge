@@ -47,9 +47,9 @@ public class DriveSystem extends SubsystemBase {
   private CANSparkMax lf1 = new CANSparkMax(D_PORTS[1][0], MotorType.kBrushless);
   private CANSparkMax lf2 = new CANSparkMax(D_PORTS[2][0], MotorType.kBrushless);
 
-  //private Encoder leftEnc = new Encoder(E_PORTS[0][0], E_PORTS[0][1]);
+  private Encoder leftEnc = new Encoder(E_PORTS[0][0], E_PORTS[0][1]);
 
-  //private Encoder rightEnc = new Encoder(E_PORTS[1][0], E_PORTS[1][1]);
+  private Encoder rightEnc = new Encoder(E_PORTS[1][0], E_PORTS[1][1]);
 
   private double lSpeed = 0;
 
@@ -136,14 +136,14 @@ public class DriveSystem extends SubsystemBase {
     rSpeed = r;
   }
 
-  /*public double[] getPositions() {
+  public double[] getPositions() {
     double[] d = {leftEnc.getDistance(), rightEnc.getDistance()};
     return d;
   }
 
   public double avgSpeed() {
     return (leftEnc.getRate() + rightEnc.getRate()) / 2;
-  }*/
+  }
 
   public void setVolts(double l, double r){
     left.setVoltage(l);
