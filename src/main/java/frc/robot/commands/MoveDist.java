@@ -7,14 +7,13 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class MoveDist extends CommandBase {
 
-  /*private double goal;
+  private double goal;
   private double[] init;
-  public static final double F = .5;
+  public final double f = .5;
   private double ang;
+  public final double tol = .5;
 
-  public static final double TOL = .1;
-
-  public MoveDist(double d) {
+  public MoveDist(double d, double tol2) {
     addRequirements(Robot.ds);
     goal = d;
   }
@@ -62,5 +61,5 @@ public class MoveDist extends CommandBase {
   public double avgDist(){
     double[] pos = Robot.ds.getPositions();
     return ((pos[0] - init[0]) + (pos[1] - init[1])) / 2;
-  }*/
+  }
 }
