@@ -10,7 +10,7 @@ import frc.robot.commands.Align;
 
 public class Drive extends CommandBase {
 
-  public static final double T_MULT = .5;
+  public static final double T_MULT = .3;
   public double lastAng = 0; 
   public double gyAng = 0;
 

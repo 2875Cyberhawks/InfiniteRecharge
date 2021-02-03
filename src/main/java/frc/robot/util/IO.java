@@ -3,6 +3,7 @@ package frc.robot.util;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IO {
 
@@ -31,10 +32,12 @@ public class IO {
     }
 
     public static double getForward() {
+        SmartDashboard.putNumber("Forward: ",Math.abs(joy.getY()) > .03 ? -joy.getY() : 0 );
         return Math.abs(joy.getY()) > .03 ? -joy.getY() : 0;
     }
 
     public static double getTurn() {
+        SmartDashboard.putNumber("Turn: ", Math.abs(joy.getZ()) > .3 ? joy.getZ() : 0);
         return Math.abs(joy.getZ()) > .3 ? joy.getZ() : 0;
     }
     public static int getClimb() {
@@ -50,5 +53,9 @@ public class IO {
 
     public static double getElevator() {
         return Math.abs(xbox.getY(Hand.kRight)) > .1 ? xbox.getY(Hand.kRight) : 0;
+    }
+
+    public static boolean getTrigger(){
+        return xbox.getBumper(Hand.kRight);
     }
 }

@@ -22,9 +22,11 @@ public class Shoot extends CommandBase {
 
   public void execute() {
     int status = IO.getShoot();
+    if (IO.getTrigger()){
+      Robot.ss.setSetpointF(FSPEED);
+    }
     if(status == 1){
       Robot.ss.setSetpointS(sOfD(Robot.getDistance()));
-      Robot.ss.setSetpointF(FSPEED);
       Robot.ss.setBackwardsS(false);
       Robot.ss.setBackwardsF(false);
     }
