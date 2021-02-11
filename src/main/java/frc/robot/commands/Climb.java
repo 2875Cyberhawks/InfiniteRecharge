@@ -1,36 +1,36 @@
 
-package frc.robot.commands;
+// package frc.robot.commands;
 
-import frc.robot.Robot;
-import frc.robot.util.IO;
+// import frc.robot.Robot;
+// import frc.robot.util.IO;
 
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+// import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Climb extends CommandBase {
+// public class Climb extends CommandBase {
 
-  public static final double SPEED = .6;
+//   public static final double SPEED = .6;
 
-  public Climb() {
-    addRequirements(Robot.cs);
-  }
+//   public Climb() {
+//     addRequirements(Robot.cs);
+//   }
 
-  public void initialize() {
-      Robot.cs.stop();
-    }
+//   public void initialize() {
+//       Robot.cs.stop();
+//     }
 
-  public void execute() {
-    Robot.cs.setSpeed(IO.getClimb() * SPEED);
+//   public void execute() {
+//     Robot.cs.setSpeed(IO.getClimb() * SPEED);
       
-    if (IO.toggleRatchet()){
-      Robot.cs.toggle();
-    }      
-  }
+//     if (IO.toggleRatchet()){
+//       Robot.cs.toggle();
+//     }      
+//   }
 
-  public void end(boolean interrupted) {
-  }
+//   public void end(boolean interrupted) {
+//   }
 
-  public boolean isFinished() {
-    return false;
-  }
-}
+//   public boolean isFinished() {
+//     return false;
+//   }
+// }
