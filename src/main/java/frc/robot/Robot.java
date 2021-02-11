@@ -20,7 +20,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   public static ClimbSystem cs; 
-  public static ShootSystem ss;
+  //public static ShootSystem ss;
   public static DriveSystem ds;
   
   public static IntakeSystem is;
@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    ss = new ShootSystem();
+    //ss = new ShootSystem();
     is = new IntakeSystem();
     ds = new DriveSystem();
     gyro = new AHRS(SPI.Port.kMXP); 
@@ -70,10 +70,9 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     inAuto = false;
     gyro.reset();//if robot is facing forwards at end of auto
-    //ss.setDefaultCommand(new Shoot());
     ds.setDefaultCommand(new Drive());
     is.setDefaultCommand(new Intake());
-    ss.setDefaultCommand(new Shoot());
+    //ss.setDefaultCommand(new Shoot());
   }
 
   public void teleopPeriodic() {
